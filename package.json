@@ -1,8 +1,11 @@
 {
 	"name": "matlab-interactive-terminal",
 	"displayName": "Matlab Interactive Terminal",
-	"description": "LEAVE BLANK",
+	"description": "Interactive MATLAB terminal for Visual Studio Code, based on Matlab Engine for Python",
 	"version": "0.0.1",
+	"publisher": "apommel",
+	"repository": "https://github.com/apommel/vscode-matlab-interactive-terminal",
+	"license": "SEE LICENSE",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
@@ -10,14 +13,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.openMatlabTerminal",
+		"onCommand:extension.runMatlabScript"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.openMatlabTerminal",
+				"title": "Open a Matlab Terminal"
+			},
+			{
+				"command": "extension.runMatlabScript",
+				"title": "Run current Matlab Script"
 			}
 		]
 	},
