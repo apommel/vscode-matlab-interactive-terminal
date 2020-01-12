@@ -1,7 +1,7 @@
 import sys
 try: # Check if the Matlab Engine is installed
     import matlab.engine
-except:
+except ImportError:
     print("Matlab Engine for Python cannot be detected. Please install it for the extension to work")
     fail = True
 else:
