@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	}
 	catch(error) { // If an error is catched, Python cannot be called
-		err_message = "The Matlab Engine for Python seems to not be installed correctly";
+		err_message = "Python is not installed or was not added to PATH";
 		vscode.window.showErrorMessage(err_message)
 		correct_setup = false;
 	};
