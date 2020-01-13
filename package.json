@@ -2,10 +2,14 @@
 	"name": "matlab-interactive-terminal",
 	"displayName": "Matlab Interactive Terminal",
 	"description": "Interactive MATLAB terminal for Visual Studio Code, based on Matlab Engine for Python",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"publisher": "apommel",
-	"repository": "https://github.com/apommel/vscode-matlab-interactive-terminal",
 	"license": "SEE LICENSE",
+	"icon": "images/icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/apommel/vscode-matlab-interactive-terminal.git"
+	},
 	"engines": {
 		"vscode": "^1.41.0"
 	},
