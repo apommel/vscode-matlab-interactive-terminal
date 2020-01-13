@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "matlab-interactive-terminal" is now active!');
 
 	const ext_dir = context.asAbsolutePath('');
-	const script_dir = path.join(ext_dir, "/src/python_scripts/");
+	const script_dir = path.join(ext_dir, "/interfaces/");
 
 	// Check the dependencies at startup and inform the user
 	var correct_setup = true;
