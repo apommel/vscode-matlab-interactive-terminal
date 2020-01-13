@@ -2,7 +2,7 @@
 	"name": "matlab-interactive-terminal",
 	"displayName": "Matlab Interactive Terminal",
 	"description": "Interactive MATLAB terminal for Visual Studio Code, compatible with Windows, Mac and Linux",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"publisher": "apommel",
 	"license": "SEE LICENSE",
 	"icon": "images/icon.png",
