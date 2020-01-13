@@ -20,7 +20,7 @@ while loop and not fail:
     else:
         try:
             eng.eval(command, nargout=0) # Feed the instructions to Matlab eval
-        except: # The exceptions are actually handled by Matlab
+        except: # The exceptions are handled by Matlab
             pass
 
 if not fail:

@@ -2,7 +2,6 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { exec } from 'child_process';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -29,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 			};
 		});
 	}
-	catch(error) {
+	catch(error) { // If an error is catched, Python cannot be called
 		err_message = "The Matlab Engine for Python seems to not be installed correctly";
 		vscode.window.showErrorMessage(err_message)
 		correct_setup = false;
@@ -52,13 +51,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const runMlScript = () => {
 		if (correct_setup){
-			if (vscode.window.activeTextEditor == undefined)
+			if (vscode.window.activeTextEditor == undefined) // If not any file is opened, a Matlab terminal is simply opened
 			{
 				if (vscode.window.activeTerminal == undefined)
 				{
 					openMlTerminal();
 				}
-				else if (vscode.window.activeTerminal.name != "Matlab REPL")
+				else if (vscode.window.activeTerminal.name != "Matlab REPL") // The terminal is not opened if there is already a current one
 				{
 					openMlTerminal();
 				};
@@ -72,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
 					terminal.sendText("python " + script_path + ' ' + current_file);
 					terminal.show();
 				}
-				else if (vscode.window.activeTerminal.name == "Matlab REPL")
+				else if (vscode.window.activeTerminal.name == "Matlab REPL") // If already a Matlab Engine started, the file is run in it
 				{
 					vscode.window.activeTerminal.sendText(path.parse(current_file).name)
 				}
