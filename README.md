@@ -23,7 +23,7 @@ There are none for now.
 ## Release Notes
 
 ### 0.1.0
-Basic functionnalities and dependencies checks implemented
+Basic functionalities and dependencies checks implemented
 
 ## Known Issues
 
