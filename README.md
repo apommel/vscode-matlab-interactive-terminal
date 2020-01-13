@@ -16,14 +16,10 @@ The extension adds two commands to Visual Studio Code, that can then be tied to 
 - `Open a Matlab Terminal` which opens an interactive Matlab terminal in the VS Code integrated terminal, similar to the Matlab command line
 - `Run current Matlab Script` which runs the currently opened Matlab script and then allows the user to interact with it through the opened terminal
 
-## Extension Settings
+## Recommended VS Code Extensions
 
-There are none for now.
-
-## Release Notes
-
-### 0.1.0
-Basic functionalities and dependencies checks implemented
+- [Matlab](https://marketplace.visualstudio.com/items?itemName=Gimly81.matlab) (from Xavier Hahn) provides syntax coloration, snippets and linting for the Matlab language. Matlab Interactive Terminal is thought for working with it.
+- [Matlab Code Run](https://marketplace.visualstudio.com/items?itemName=bramvanbilsen.matlab-code-run) (from Bram Vanbilsen) is a good alternative to Matlab Interactive Terminal without the Python and Matlab Engine API dependencies. It should provide similar functionalities on both Mac OS and Linux.
 
 ## Known Issues
 
