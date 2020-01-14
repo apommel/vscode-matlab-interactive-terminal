@@ -16,6 +16,10 @@ class MatlabInterface:
         if not self.import_fail:
             self.eng.run(script_path, nargout=0)
 
+    def run_selection(self, selection):
+        if not self.import_fail:
+            self.eng.eval(selection, nargout=0)
+
     def interactive_loop(self):
         loop=True # Looping allows for an interactive terminal
         while loop and not self.import_fail:
