@@ -19,7 +19,8 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.openMatlabTerminal",
-		"onCommand:extension.runMatlabScript"
+		"onCommand:extension.runMatlabScript",
+		"onCommand:extension.runMatlabSelection"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -31,6 +32,10 @@
 			{
 				"command": "extension.runMatlabScript",
 				"title": "Run current Matlab Script"
+			},
+			{
+				"command": "extension.runMatlabSelection",
+				"title": "Run current selection in Matlab"
 			}
 		]
 	},

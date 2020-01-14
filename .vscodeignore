@@ -9,3 +9,4 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 __pycache__/
+*/__pycache__/

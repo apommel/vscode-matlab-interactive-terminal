@@ -2,9 +2,10 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
-## [0.1.5] - 
+## [0.2.0] - 2020-01-14 
 ### Added
 - Implemented better code structure for the Python scripts
+- Added command to launch current selection or current line in Matlab REPL
 
 ## [0.1.4] - 2020-01-14
 ### Fixed

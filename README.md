@@ -12,9 +12,10 @@ More informations about MATLAB-Python compatibility are available on [MathWorks 
 
 ## Features
 
-The extension adds two commands to Visual Studio Code, that can then be tied to key-bindings. These are:
+The extension adds three commands to Visual Studio Code, that can then be tied to key-bindings. These are:
 - `Open a Matlab Terminal` which opens an interactive Matlab terminal in the VS Code integrated terminal, similar to the Matlab command line
 - `Run current Matlab Script` which runs the currently opened Matlab script and then allows the user to interact with it through the opened terminal
+- `Run current selection in Matlab` which runs the currently selected text in a Matlab terminal. If no text is selected, the current line is run instead
 
 ## Recommended VS Code Extensions
 

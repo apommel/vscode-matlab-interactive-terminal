@@ -49,21 +49,26 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('extension.openMatlabTerminal', openMlTerminal));
 
 
+	const terminalFallback = () => {
+		if (vscode.window.activeTerminal == undefined)
+		{
+			openMlTerminal();
+		}
+		else if (vscode.window.activeTerminal.name != "Matlab REPL") // The terminal is not opened if there is already a current one
+		{
+			openMlTerminal();
+		};
+	};
+
+
 	const runMlScript = () => {
 		if (correct_setup){
 			if (vscode.window.activeTextEditor == undefined) // If not any file is opened, a Matlab terminal is simply opened
 			{
-				if (vscode.window.activeTerminal == undefined)
-				{
-					openMlTerminal();
-				}
-				else if (vscode.window.activeTerminal.name != "Matlab REPL") // The terminal is not opened if there is already a current one
-				{
-					openMlTerminal();
-				};
+				terminalFallback();
 			}
 			else {
-				let current_file = path.basename(vscode.window.activeTextEditor.document.fileName);
+				let current_file = vscode.window.activeTextEditor.document.fileName;
 				let script_path = path.join(script_dir, "ml_script.py");
 				if (vscode.window.activeTerminal == undefined)
 				{
@@ -89,6 +94,44 @@ export function activate(context: vscode.ExtensionContext) {
 		};
 	};
 	context.subscriptions.push(vscode.commands.registerCommand('extension.runMatlabScript', runMlScript));
+
+	const runMlSelection = () => {
+		let activeTextEditor = vscode.window.activeTextEditor;
+		if (correct_setup){
+			if (activeTextEditor == undefined){
+				terminalFallback();
+			}
+			else{
+				if (activeTextEditor.selection.isEmpty){ // Run current line if selection is empty
+					var current_selection = activeTextEditor.document.lineAt(activeTextEditor.selection.active).text;
+				}
+				else {
+					var current_selection = activeTextEditor.document.getText(activeTextEditor.selection);
+				};
+				let script_path = path.join(script_dir, "ml_selection.py");
+				if (vscode.window.activeTerminal == undefined){
+					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
+					terminal.sendText("python " + script_path + ' ' + current_selection);
+					terminal.show();
+				}
+				else if (vscode.window.activeTerminal.name == "Matlab REPL") // If already a Matlab Engine started, the file is run in it
+				{
+					vscode.window.activeTerminal.sendText(current_selection);
+				}
+				else
+				{
+					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
+					terminal.sendText("python " + script_path + ' ' + current_selection);
+					terminal.show();
+				};
+			};
+		}
+		else {
+			vscode.window.showErrorMessage(err_message);
+		};
+	};
+	context.subscriptions.push(vscode.commands.registerCommand('extension.runMatlabSelection', runMlSelection));
+
 }
 
 // this method is called when your extension is deactivated
