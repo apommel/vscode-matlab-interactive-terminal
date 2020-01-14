@@ -73,7 +73,8 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				else if (vscode.window.activeTerminal.name == "Matlab REPL") // If already a Matlab Engine started, the file is run in it
 				{
-					vscode.window.activeTerminal.sendText(path.parse(current_file).name)
+					vscode.window.activeTerminal.sendText("clear functions"); // Force Matlab to reload the scripts
+					vscode.window.activeTerminal.sendText(path.parse(current_file).name);
 				}
 				else
 				{
