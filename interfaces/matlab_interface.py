@@ -53,6 +53,7 @@ class MatlabInterface:
                 except MatlabTerminated:
                     print("Matlab terminated. Restarting the engine...")
                     self.eng = matlab.engine.start_matlab()
+                    print("Matlab restarted")
                 except : # The other exceptions are handled by Matlab
                     pass
         if not import_fail: self.eng.quit()

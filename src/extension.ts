@@ -50,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('extension.openMatlabTerminal', openMlTerminal));
 
 
-	const terminalFallback = (activeTerminal) => {
+	const terminalFallback = (activeTerminal: vscode.Terminal | undefined) => {
 		// The terminal is not opened if there is already a current one
 		if (activeTerminal == undefined || (activeTerminal && activeTerminal.name != "Matlab REPL"))
 		{
