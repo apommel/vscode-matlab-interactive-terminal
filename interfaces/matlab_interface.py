@@ -3,7 +3,7 @@ class MatlabInterface:
     def __init__(self):
         try: # Check if the Matlab Engine is installed
             import matlab.engine
-            from matlab.engine import RejectedExecutionError as self.MatlabTerminated
+            from matlab.engine import RejectedExecutionError as MatlabTerminated
         except ImportError:
             print("Matlab Engine for Python cannot be detected. Please install it for the extension to work")
             self.import_fail = True
@@ -29,7 +29,7 @@ class MatlabInterface:
             else:
                 try:
                     self.eng.eval(command, nargout=0) # Feed the instructions to Matlab eval
-                except self.MatlabTerminated:
+                except MatlabTerminated:
                     print("Matlab terminated. Restarting the engine...")
                     self.eng = matlab.engine.start_matlab()
                 except : # The other exceptions are handled by Matlab
