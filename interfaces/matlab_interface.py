@@ -21,11 +21,25 @@ class MatlabInterface:
 
     def run_script(self, script_path):
         if not import_fail:
-            self.eng.run(script_path, nargout=0)
+            try:
+                print("Running: \"{}\"".format(script_path))
+                self.eng.run(script_path, nargout=0)
+            except MatlabTerminated:
+                print("Matlab terminated. Restarting the engine...")
+                self.eng = matlab.engine.start_matlab()
+            except : # The other exceptions are handled by Matlab
+                pass
 
     def run_selection(self, selection):
         if not import_fail:
-            self.eng.eval(selection, nargout=0)
+            try:
+                print("Running:\n" + selection)
+                self.eng.eval(selection, nargout=0)
+            except MatlabTerminated:
+                print("Matlab terminated. Restarting the engine...")
+                self.eng = matlab.engine.start_matlab()
+            except : # The other exceptions are handled by Matlab
+                pass
 
     def interactive_loop(self):
         loop=True # Looping allows for an interactive terminal

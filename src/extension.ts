@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (correct_setup){
 			let script_path = path.join(script_dir, "ml_terminal.py");
 			const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
-			terminal.sendText(util.format("python '%s'", script_path));
+			terminal.sendText(util.format("python \"%s\"", script_path));
 			terminal.show();
 		}
 		else {
@@ -69,12 +69,12 @@ export function activate(context: vscode.ExtensionContext) {
 				if (activeTerminal && activeTerminal.name == "Matlab REPL") // If already a Matlab Engine started, the file is run in it
 				{
 					activeTerminal.sendText("clear functions"); // Force Matlab to reload the scripts
-					activeTerminal.sendText(util.format("run('%s')", current_file));
+					activeTerminal.sendText(util.format("run(\"%s\")", current_file));
 				}
 				else
 				{
 					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
-					terminal.sendText(util.format("python '%s' '%s'", script_path, current_file));
+					terminal.sendText(util.format("python \"%s\" \"%s\"", script_path, current_file));
 					terminal.show();
 				};
 			}
@@ -109,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
 				else
 				{
 					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
-					terminal.sendText(util.format("python '%s' '%s'", script_path, current_selection));
+					terminal.sendText(util.format("python \"%s\" \"%s\"", script_path, current_selection));
 					terminal.show();
 				};
 			}
