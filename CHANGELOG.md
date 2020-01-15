@@ -2,7 +2,7 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
-## [0.2.3] -
+## [0.2.3] - 2020-01-15
 ### Fixed
 - Fixed bug where terminal was launching when dependencies were not satisfied
 
