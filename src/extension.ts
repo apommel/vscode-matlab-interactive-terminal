@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 				correct_setup = false;
 		}
 	}
-	catch(error) { // If an error is catched, it means Python cannot be called
+	catch(error) { // If an error is caught, it means Python cannot be called
 		err_message = "Python is not installed or was not added to PATH";
 		vscode.window.showErrorMessage(err_message);
 		correct_setup = false;
