@@ -8,6 +8,7 @@ All notable changes to the Matlab Interactive Terminal extension for Visual Stud
 ### Fixed
 - Multi-lines selections when no terminal is open
 - Spaces in paths and instructions on all cases 
+- Corrected bug in Python related to Matlab error handling
 
 ## [0.2.1] - 2020-01-14 
 ### Fixed
