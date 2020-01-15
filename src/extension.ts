@@ -16,22 +16,21 @@ export function activate(context: vscode.ExtensionContext) {
 	const script_dir = path.join(ext_dir, "/interfaces/");
 
 	// Check the dependencies at startup and inform the user
-	var correct_setup = true;
-	var err_message = "";
+	let correct_setup = true;
+	let err_message = "";
 	let script_path = path.join(script_dir, "check_dependencies.py");
-	const {execFile} = require('child_process');
+	const {execFileSync} = require('child_process');
 	try {
-		execFile('python', [script_path], (error, stdout, stderr) => {
-			if (error){
+		let stdout = execFileSync('python', [script_path]);
+		if (stdout.toString() == 1){
 				err_message = "The Matlab Engine for Python seems to not be installed correctly";
-				vscode.window.showErrorMessage(err_message)
+				vscode.window.showErrorMessage(err_message);
 				correct_setup = false;
-			};
-		});
+		};
 	}
-	catch(error) { // If an error is catched, Python cannot be called
+	catch(error) { // If an error is catched, it means Python cannot be called
 		err_message = "Python is not installed or was not added to PATH";
-		vscode.window.showErrorMessage(err_message)
+		vscode.window.showErrorMessage(err_message);
 		correct_setup = false;
 	};
 
@@ -44,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 			terminal.show();
 		}
 		else {
+			console.log(err_message);
 			vscode.window.showErrorMessage(err_message)
 		}
 	};
@@ -83,6 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		else {
+			console.log(err_message);
 			vscode.window.showErrorMessage(err_message);
 		};
 	};
@@ -117,6 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
 			};
 		}
 		else {
+			console.log(err_message);
 			vscode.window.showErrorMessage(err_message);
 		};
 	};

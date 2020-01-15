@@ -2,6 +2,6 @@
 try: # Check if the Matlab Engine is installed
     import matlab.engine
 except ImportError:
-    exit(1)
+    print('1')
 else:
-    exit(0)
+    print('0')

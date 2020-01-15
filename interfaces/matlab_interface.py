@@ -12,9 +12,12 @@ class MatlabInterface:
     global import_fail
 
     def __init__(self):
-        print("Starting Matlab...")
-        self.eng = matlab.engine.start_matlab()
-        print("Matlab started")
+        if not import_fail:
+            print("Starting Matlab...")
+            self.eng = matlab.engine.start_matlab()
+            print("Matlab started")
+        else:
+            print("Could not start Matlab")
 
     def run_script(self, script_path):
         if not import_fail:
