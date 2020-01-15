@@ -2,6 +2,13 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.2.2]
+### Added
+- Reworked TypeScript code
+### Fixed
+- Multi-lines selections when no terminal is open
+- Spaces in paths and instructions on all cases 
+
 ## [0.2.1] - 2020-01-14 
 ### Fixed
 - Fixed a bug where the selected text could not be run in an empty terminal if it contained spaces
