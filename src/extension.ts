@@ -85,7 +85,6 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		else {
-			console.log(err_message);
 			vscode.window.showErrorMessage(err_message);
 		}
 	};
@@ -112,13 +111,12 @@ export function activate(context: vscode.ExtensionContext) {
 				else
 				{
 					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
-					let tempDir = require('os').tmpdir;
-					if (vscode.workspace.workspaceFolders){
-						tempDir = vscode.workspace.workspaceFolders[0].uri.fsPath;
+					let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
+					if (!fs.existsSync(tempDir)){
+						fs.mkdirSync(tempDir);
 					}
-					console.log(tempDir);
 					let tempPath = path.join(tempDir, 'temp.m');
-					console.log(tempPath)
+					console.log(tempPath);
 					fs.writeFileSync(tempPath, current_selection);
 					terminal.sendText(util.format("python \"%s\" \"%s\"", script_path, tempPath));
 					terminal.show(false);
@@ -129,7 +127,6 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		else {
-			console.log(err_message);
 			vscode.window.showErrorMessage(err_message);
 		}
 	};

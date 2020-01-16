@@ -1,4 +1,5 @@
-from os import remove
+from os import remove, rmdir, path
+
 global import_fail
 try: # Check if the Matlab Engine is installed
     import matlab.engine
@@ -28,6 +29,7 @@ class MatlabInterface:
             except MatlabTerminated:
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
+                print("Matlab restarted")
             except : # The other exceptions are handled by Matlab
                 pass
 
@@ -44,10 +46,12 @@ class MatlabInterface:
             except MatlabTerminated:
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
+                print("Matlab restarted")
             except : # The other exceptions are handled by Matlab
                 pass
             finally:
                 remove(temp_path)
+                rmdir(path.dirname(temp_path))
 
     def interactive_loop(self):
         loop=True # Looping allows for an interactive terminal
