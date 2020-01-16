@@ -37,8 +37,11 @@ class MatlabInterface:
         if not import_fail:
             f = open(temp_path, 'r')
             print("Running:")
-            for line in f:
-                print(line, end='')
+            try: # Print the content of the selection before running it, encoding issues can happen
+                for line in f:
+                    print(line, end='')
+            except UnicodeDecodeError:
+                print("current selection")
             print('\n')
             f.close()
             try:
