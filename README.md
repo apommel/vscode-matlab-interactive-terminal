@@ -24,4 +24,4 @@ The extension adds three commands to Visual Studio Code, that can then be tied t
 
 ## Known Issues
 
-- Running a file with double quotes in its path fails (even though there shouldn't be) 
+- Running a file with double quotes in its path fails (even though this situation should not happen, at least on Windows) 
