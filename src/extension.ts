@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as util from 'util';
+import * as fs from 'fs';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -40,7 +41,8 @@ export function activate(context: vscode.ExtensionContext) {
 			let script_path = path.join(script_dir, "ml_terminal.py");
 			const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
 			terminal.sendText(util.format("python \"%s\"", script_path));
-			terminal.show();
+			terminal.show(false);
+			vscode.commands.executeCommand("workbench.action.terminal.clear");
 		}
 		else {
 			console.log(err_message);
@@ -75,7 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
 				{
 					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
 					terminal.sendText(util.format("python \"%s\" \"%s\"", script_path, current_file));
-					terminal.show();
+					terminal.show(false);
 				}
 			}
 			else { // If not any file is opened, a Matlab terminal is simply opened
@@ -110,8 +112,16 @@ export function activate(context: vscode.ExtensionContext) {
 				else
 				{
 					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
-					terminal.sendText(util.format("python \"%s\" \"%s\"", script_path, current_selection));
-					terminal.show();
+					let tempDir = require('os').tmpdir;
+					if (vscode.workspace.workspaceFolders){
+						tempDir = vscode.workspace.workspaceFolders[0].uri.fsPath;
+					}
+					console.log(tempDir);
+					let tempPath = path.join(tempDir, 'temp.m');
+					console.log(tempPath)
+					fs.writeFileSync(tempPath, current_selection);
+					terminal.sendText(util.format("python \"%s\" \"%s\"", script_path, tempPath));
+					terminal.show(false);
 				}
 			}
 			else {

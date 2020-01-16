@@ -1,3 +1,4 @@
+from os import remove
 global import_fail
 try: # Check if the Matlab Engine is installed
     import matlab.engine
@@ -30,16 +31,23 @@ class MatlabInterface:
             except : # The other exceptions are handled by Matlab
                 pass
 
-    def run_selection(self, selection):
+    def run_selection(self, temp_path):
         if not import_fail:
+            f = open(temp_path, 'r')
+            print("Running:")
+            for line in f:
+                print(line, end='')
+            print('\n')
+            f.close()
             try:
-                print("Running:\n" + selection)
-                self.eng.eval(selection, nargout=0)
+                self.eng.run(temp_path, nargout=0)
             except MatlabTerminated:
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
             except : # The other exceptions are handled by Matlab
                 pass
+            finally:
+                remove(temp_path)
 
     def interactive_loop(self):
         loop=True # Looping allows for an interactive terminal

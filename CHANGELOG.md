@@ -2,6 +2,10 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.2.5] -
+### Fixed
+- The `Run selection` command should now handle properly the double quotes, by using a temporary file
+
 ## [0.2.4] - 2020-01-15
 ### Fixed
 - The exceptions are now properly handled when a file or a selection are run
