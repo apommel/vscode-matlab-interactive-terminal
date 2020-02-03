@@ -10,3 +10,4 @@ vsc-extension-quickstart.md
 **/*.ts
 __pycache__/
 */__pycache__/
+*.pyc
