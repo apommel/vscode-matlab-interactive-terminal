@@ -37,7 +37,17 @@
 				"command": "extension.runMatlabSelection",
 				"title": "Run current selection in Matlab"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Matlab Interactive Terminal",
+			"properties": {
+				"matlab-interactive-terminal.pythonPath": {
+					"type": "string",
+					"default": null,
+					"description": "Specifies the path to the Python executable to use (if leaved blank, Python in PATH is used)"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
