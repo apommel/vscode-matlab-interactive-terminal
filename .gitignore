@@ -4,3 +4,4 @@ node_modules
 *.vsix
 __pycache__/
 */__pycache__/
+*.pyc
