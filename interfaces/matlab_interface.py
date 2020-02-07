@@ -68,6 +68,7 @@ class MatlabInterface:
     def interactive_loop(self):
         loop=True # Looping allows for an interactive terminal
         while loop and not import_fail:
+            print('>> ', end='')
             command = input()
             if command=="exit" or command=="exit()": # Keywords to leave the engine
                 loop=False
