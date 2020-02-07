@@ -2,9 +2,14 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.2.8] - 2020-02-07
+### Added
+- Added basic Python 2 compatibility
+- Added prompts in the Matlab terminal Issue #2
+
 ## [0.2.7] - 2020-02-03
 ### Added
-- Added option to specify the Python executable to use in case of several versions
+- Added option to specify the Python executable to use in case of several versions Issue #1
 
 ## [0.2.6] - 2020-01-19
 ### Fixed
