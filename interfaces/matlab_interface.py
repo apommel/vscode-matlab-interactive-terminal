@@ -19,23 +19,25 @@ except ImportError:
 else:
     import_fail = False
 
-# OS checks related work
-if os.name == 'nt':
-    cls_str = 'cls'
-else:
-    cls_str = 'clear'
-
 class MatlabInterface:
     global import_fail
 
     def __init__(self):
-        os.system('cls')
+        # OS checks related work
+        if os.name == 'nt':
+            self.cls_str = 'cls'
+        else:
+            self.cls_str = 'clear'
+        self.clear()
         if not import_fail:
             print("Starting Matlab...")
             self.eng = matlab.engine.start_matlab()
             print("Matlab started")
         else:
             print("Could not start Matlab")
+
+    def clear(self):
+        os.system(self.cls_str)
 
     def run_script(self, script_path):
         if not import_fail:
@@ -79,6 +81,8 @@ class MatlabInterface:
             command = input()
             if command=="exit" or command=="exit()": # Keywords to leave the engine
                 loop=False
+            elif command=="clc": # matlab terminal clearing must be reimplemented
+                self.clear()
             else:
                 try:
                     self.eng.eval(command, nargout=0) # Feed the instructions to Matlab eval
