@@ -31,6 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 		return(python_path);
 	};
 	let python_path = getPythonPath();
+	let terminalLaunchOpt: vscode.TerminalOptions = {name: 'Matlab REPL', hideFromUser: true};
 
 	// Check the dependencies and inform the user
 	let err_message = "";
@@ -59,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
 		python_path = getPythonPath();
 		correct_setup = checkSetup();
 		if (correct_setup){
-			const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
+			const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 			terminal.sendText(python_path + util.format(" \"%s\"", script_path));
 			terminal.show(false);
 		}
@@ -96,7 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup){
-					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
+					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, current_file));
 					terminal.show(false);
 				}
@@ -134,7 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup){
-					const terminal = vscode.window.createTerminal({ name: 'Matlab REPL'});
+					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
 					if (!fs.existsSync(tempDir)){
 						fs.mkdirSync(tempDir);

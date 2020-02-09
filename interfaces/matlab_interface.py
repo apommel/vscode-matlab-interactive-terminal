@@ -7,7 +7,7 @@ try:
 except NameError:
     pass
 
-from os import remove, rmdir, path
+import os
 
 global import_fail
 try: # Check if the Matlab Engine is installed
@@ -19,10 +19,17 @@ except ImportError:
 else:
     import_fail = False
 
+# OS checks related work
+if os.name == 'nt':
+    cls_str = 'cls'
+else:
+    cls_str = 'clear'
+
 class MatlabInterface:
     global import_fail
 
     def __init__(self):
+        os.system('cls')
         if not import_fail:
             print("Starting Matlab...")
             self.eng = matlab.engine.start_matlab()
@@ -62,8 +69,8 @@ class MatlabInterface:
             except : # The other exceptions are handled by Matlab
                 pass
             finally:
-                remove(temp_path)
-                rmdir(path.dirname(temp_path))
+                os.remove(temp_path)
+                os.rmdir(os.path.dirname(temp_path))
 
     def interactive_loop(self):
         loop=True # Looping allows for an interactive terminal
