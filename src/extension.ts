@@ -85,6 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let activeTextEditor = vscode.window.activeTextEditor;
 		let activeTerminal = vscode.window.activeTerminal;
 		if (activeTextEditor){
+			activeTextEditor.document.save();
 			let current_file = activeTextEditor.document.fileName;
 			let script_path = path.join(script_dir, "ml_script.py");
 			if (activeTerminal && activeTerminal.name === "Matlab REPL") // If already a Matlab Engine started, the file is run in it
