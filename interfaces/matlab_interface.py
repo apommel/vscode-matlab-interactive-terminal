@@ -32,7 +32,6 @@ class MatlabInterface:
         if not import_fail:
             print("Starting Matlab...")
             self.eng = matlab.engine.start_matlab()
-            print("Matlab started")
         else:
             print("Could not start Matlab")
 
