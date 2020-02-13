@@ -91,6 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
 			{
 				activeTerminal.sendText("clear functions"); // Force Matlab to reload the scripts
 				activeTerminal.sendText(util.format("run(\"%s\")", current_file));
+				activeTerminal.show(false);
 			}
 			else
 			{
@@ -129,6 +130,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (activeTerminal && activeTerminal.name === "Matlab REPL") // If already a Matlab Engine started, the selection is run in it
 			{
 				activeTerminal.sendText(current_selection);
+				activeTerminal.show(false);
 			}
 			else
 			{
