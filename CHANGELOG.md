@@ -2,6 +2,13 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.2.9] - 2020-02-13
+### Added
+- The script calling is hidden at initialization
+### Fixed
+- Implemented correctly Matlab `clc` command
+- The terminal is correctly shown in certain situations
+
 ## [0.2.8] - 2020-02-07
 ### Added
 - Added basic Python 2 compatibility
