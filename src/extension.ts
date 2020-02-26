@@ -128,9 +128,15 @@ export function activate(context: vscode.ExtensionContext) {
 				current_selection = activeTextEditor.document.getText(activeTextEditor.selection);
 			}
 			let script_path = path.join(script_dir, "ml_selection.py");
+			let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
+			if (!fs.existsSync(tempDir)){
+				fs.mkdirSync(tempDir);
+			}
+			let tempPath = path.join(tempDir, 'temp.m');
+			fs.writeFileSync(tempPath, current_selection);
 			if (activeTerminal && activeTerminal.name === "Matlab REPL") // If already a Matlab Engine started, the selection is run in it
 			{
-				activeTerminal.sendText(current_selection);
+				activeTerminal.sendText(util.format("run(\"%s\")", tempPath));
 				activeTerminal.show(false);
 			}
 			else
@@ -139,13 +145,6 @@ export function activate(context: vscode.ExtensionContext) {
 				correct_setup = checkSetup();
 				if (correct_setup){
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
-					let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
-					if (!fs.existsSync(tempDir)){
-						fs.mkdirSync(tempDir);
-					}
-					let tempPath = path.join(tempDir, 'temp.m');
-					console.log(tempPath);
-					fs.writeFileSync(tempPath, current_selection);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, tempPath));
 					terminal.show(false);
 				}
