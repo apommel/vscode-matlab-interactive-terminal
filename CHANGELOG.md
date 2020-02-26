@@ -2,6 +2,13 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.2.10] - 2020-02-26
+### Added
+- When a script is run, it is saved beforehand in order to be correctly updated
+### Fixed
+- Fixed discrepancies in run selection by using temporary files
+- Updated readme
+
 ## [0.2.9] - 2020-02-13
 ### Added
 - The script calling is hidden at initialization
