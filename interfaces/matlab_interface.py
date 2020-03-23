@@ -6,8 +6,8 @@ try:
     input = raw_input
 except NameError:
     pass
-
 import os
+from timeout import timeout
 
 global import_fail
 try: # Check if the Matlab Engine is installed
@@ -43,6 +43,7 @@ class MatlabInterface:
             try:
                 print("Running: \"{}\"".format(script_path))
                 self.eng.run(script_path, nargout=0)
+                print()
             except MatlabTerminated:
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
