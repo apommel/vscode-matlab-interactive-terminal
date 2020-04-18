@@ -2,6 +2,12 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.3.0] - 2020-04-18
+### Added
+- Correct implementation and handling of unicode, including CJK, characters
+### Fixed
+- Impossibility to launch from previous update
+
 ## [0.2.11] - 2020-04-18
 ### Fixed
 - Prompt locations in some cases #6
