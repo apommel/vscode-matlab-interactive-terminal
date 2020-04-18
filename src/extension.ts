@@ -121,11 +121,12 @@ export function activate(context: vscode.ExtensionContext) {
 		let activeTerminal = vscode.window.activeTerminal;
 		if (activeTextEditor){
 			var current_selection = null;
+			var cwd = path.dirname(activeTextEditor.document.uri.fsPath); // Get current file directory
 			if (activeTextEditor.selection.isEmpty){ // Run current line if selection is empty
 				current_selection = activeTextEditor.document.lineAt(activeTextEditor.selection.active).text;
 			}
 			else {
-				current_selection = activeTextEditor.document.getText(activeTextEditor.selection);
+				current_selection = `cd ${cwd}\n`.concat(activeTextEditor.document.getText(activeTextEditor.selection));
 			}
 			let script_path = path.join(script_dir, "ml_selection.py");
 			let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
