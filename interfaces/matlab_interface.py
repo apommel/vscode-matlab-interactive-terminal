@@ -2,12 +2,13 @@
 
 # Trying to have a basic Python 2 compatibility
 from __future__ import print_function
-from io import StringIO
 try:
     input = raw_input
 except NameError:
     pass
+
 import os
+from io import StringIO
 
 global import_fail
 try: # Check if the Matlab Engine is installed
@@ -43,15 +44,16 @@ class MatlabInterface:
             try:
                 print("Running: \"{}\"".format(script_path))
                 stream = StringIO()
-                self.eng.run(script_path, nargout=0, stdout=stream)
+                err_stream = StringIO()
+                self.eng.run(script_path, nargout=0, stdout=stream, stderr=err_stream)
                 print(stream.getvalue())
-                print()
             except MatlabTerminated:
+                print(stream.getvalue(), err_stream.getvalue(), sep="\n")
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
                 print("Matlab restarted")
             except : # The other exceptions are handled by Matlab
-                pass
+                print(stream.getvalue(), err_stream.getvalue(), sep="\n")
 
     def run_selection(self, temp_path):
         if not import_fail:
@@ -66,14 +68,16 @@ class MatlabInterface:
             f.close()
             try:
                 stream = StringIO()
-                self.eng.run(temp_path, nargout=0, stdout=stream)
+                err_stream = StringIO()
+                self.eng.run(temp_path, nargout=0, stdout=stream, stderr=err_stream)
                 print(stream.getvalue())
             except MatlabTerminated:
+                print(stream.getvalue(), err_stream.getvalue(), sep="\n")
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
                 print("Matlab restarted")
             except : # The other exceptions are handled by Matlab
-                pass
+                print(stream.getvalue(), err_stream.getvalue(), sep="\n")
             finally:
                 os.remove(temp_path)
                 os.rmdir(os.path.dirname(temp_path))
@@ -90,12 +94,14 @@ class MatlabInterface:
             else:
                 try:
                     stream = StringIO()
-                    self.eng.eval(command, nargout=0, stdout=stream) # Feed the instructions to Matlab eval
+                    err_stream = StringIO()
+                    self.eng.eval(command, nargout=0, stdout=stream, stderr=err_stream) # Feed the instructions to Matlab eval
                     print(stream.getvalue())
                 except MatlabTerminated:
+                    print(stream.getvalue(), err_stream.getvalue(), sep="\n")
                     print("Matlab terminated. Restarting the engine...")
                     self.eng = matlab.engine.start_matlab()
                     print("Matlab restarted")
                 except : # The other exceptions are handled by Matlab
-                    pass
+                    print(stream.getvalue(), err_stream.getvalue(), sep="\n")
         if not import_fail: self.eng.quit()
