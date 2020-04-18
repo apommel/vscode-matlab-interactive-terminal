@@ -2,12 +2,12 @@
 
 # Trying to have a basic Python 2 compatibility
 from __future__ import print_function
+from io import StringIO
 try:
     input = raw_input
 except NameError:
     pass
 import os
-from timeout import timeout
 
 global import_fail
 try: # Check if the Matlab Engine is installed
@@ -42,7 +42,9 @@ class MatlabInterface:
         if not import_fail:
             try:
                 print("Running: \"{}\"".format(script_path))
-                self.eng.run(script_path, nargout=0)
+                stream = StringIO()
+                self.eng.run(script_path, nargout=0, stdout=stream)
+                print(stream.getvalue())
                 print()
             except MatlabTerminated:
                 print("Matlab terminated. Restarting the engine...")
@@ -63,7 +65,9 @@ class MatlabInterface:
             print('\n')
             f.close()
             try:
-                self.eng.run(temp_path, nargout=0)
+                stream = StringIO()
+                self.eng.run(temp_path, nargout=0, stdout=stream)
+                print(stream.getvalue())
             except MatlabTerminated:
                 print("Matlab terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
@@ -85,7 +89,9 @@ class MatlabInterface:
                 self.clear()
             else:
                 try:
-                    self.eng.eval(command, nargout=0) # Feed the instructions to Matlab eval
+                    stream = StringIO()
+                    self.eng.eval(command, nargout=0, stdout=stream) # Feed the instructions to Matlab eval
+                    print(stream.getvalue())
                 except MatlabTerminated:
                     print("Matlab terminated. Restarting the engine...")
                     self.eng = matlab.engine.start_matlab()
