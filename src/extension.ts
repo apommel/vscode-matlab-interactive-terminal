@@ -121,7 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let activeTerminal = vscode.window.activeTerminal;
 		if (activeTextEditor){
 			var current_selection = null;
-			var cwd = path.dirname(activeTextEditor.document.uri.fsPath); // Get current file directory
+			var cwd = util.format("%s", path.dirname(activeTextEditor.document.uri.fsPath)); // Get current file directory
 			if (activeTextEditor.selection.isEmpty){ // Run current line if selection is empty
 				current_selection = activeTextEditor.document.lineAt(activeTextEditor.selection.active).text;
 			}
