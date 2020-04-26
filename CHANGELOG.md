@@ -2,6 +2,13 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.3.2] - 2020-04-26
+### Added
+- Added option to use unicode output, as if activated the output is not in real-time
+### Fixed
+- Consolidated temp file managing for run selection
+- Corrected errors when spaces were present in the path to the path from which a selection was run
+
 ## [0.3.1] - 2020-04-18
 ### Fixed
 - Properly displays error messages with unicode
