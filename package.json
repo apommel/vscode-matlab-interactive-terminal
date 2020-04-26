@@ -11,7 +11,7 @@
 		"url": "https://github.com/apommel/vscode-matlab-interactive-terminal.git"
 	},
 	"engines": {
-		"vscode": "^1.41.0"
+		"vscode": "^1.44.0"
 	},
 	"categories": [
 		"Programming Languages",
