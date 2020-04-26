@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Get basic directories informations
 	const ext_dir = context.asAbsolutePath('');
-	const script_dir = path.join(ext_dir, "/interfaces/");
+	let script_dir = path.join(ext_dir, "/interfaces/standard");
 
 	// Get configuration parameters
 	const getPythonPath = () => {
@@ -32,6 +32,20 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 	let python_path = getPythonPath();
 	let terminalLaunchOpt: vscode.TerminalOptions = { name: 'Matlab REPL', hideFromUser: true };
+
+	const getUnicodeOption = () => {
+		let extConfig = vscode.workspace.getConfiguration("matlab-interactive-terminal");
+		let option: Boolean | undefined;
+		option = extConfig.get("unicodeSwitch");
+		if (option === undefined) { option = false; }
+		if (option) {
+			script_dir = path.join(ext_dir, "/interfaces/unicode");
+		}
+		else {
+			script_dir = path.join(ext_dir, "/interfaces/standard");
+		}
+	}
+	getUnicodeOption();
 
 	// Check the dependencies and inform the user
 	let err_message = "";
@@ -56,6 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	const openMlTerminal = () => {
+		getUnicodeOption();
 		let script_path = path.join(script_dir, "ml_terminal.py");
 		python_path = getPythonPath();
 		correct_setup = checkSetup();
@@ -86,6 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (activeTextEditor) {
 			activeTextEditor.document.save();
 			let current_file = activeTextEditor.document.fileName;
+			getUnicodeOption();
 			let script_path = path.join(script_dir, "ml_script.py");
 			if (activeTerminal && activeTerminal.name === "Matlab REPL") // If already a Matlab Engine started, the file is run in it
 			{
@@ -129,6 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
 			else {
 				current_selection = `cd \'${cwd}\'\n`.concat(activeTextEditor.document.getText(activeTextEditor.selection));
 			}
+			getUnicodeOption();
 			let script_path = path.join(script_dir, "ml_selection.py");
 			let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
 			if (!fs.existsSync(tempDir)) {

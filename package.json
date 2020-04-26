@@ -45,6 +45,11 @@
 					"type": "string",
 					"default": null,
 					"description": "Specifies the path to the Python executable to use (if leaved blank, Python in PATH is used)"
+				},
+				"matlab-interactive-terminal.unicodeSwitch": {
+					"type": "boolean",
+					"default": "false",
+					"description": "Displays unicode characters (ex: CJK characters) in Matlab output (N.B.: output will not be in real time)"
 				}
 			}
 		}
