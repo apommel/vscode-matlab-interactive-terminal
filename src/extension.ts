@@ -14,24 +14,24 @@ export function activate(context: vscode.ExtensionContext) {
 	// Get basic directories informations
 	const ext_dir = context.asAbsolutePath('');
 	const script_dir = path.join(ext_dir, "/interfaces/");
-	
+
 	// Get configuration parameters
 	const getPythonPath = () => {
 		let extConfig = vscode.workspace.getConfiguration("matlab-interactive-terminal");
 		let python_path: string;
-		let pythonPathSetting: string|undefined;
+		let pythonPathSetting: string | undefined;
 		pythonPathSetting = extConfig.get("pythonPath");
-		if (pythonPathSetting){
+		if (pythonPathSetting) {
 			python_path = path.normalize(pythonPathSetting);
 		}
 		else {
 			python_path = "python";
 		}
 		console.log(python_path);
-		return(python_path);
+		return (python_path);
 	};
 	let python_path = getPythonPath();
-	let terminalLaunchOpt: vscode.TerminalOptions = {name: 'Matlab REPL', hideFromUser: true};
+	let terminalLaunchOpt: vscode.TerminalOptions = { name: 'Matlab REPL', hideFromUser: true };
 
 	// Check the dependencies and inform the user
 	let err_message = "";
@@ -39,19 +39,19 @@ export function activate(context: vscode.ExtensionContext) {
 	const checkSetup = () => {
 		let checked_setup = true;
 		let script_path = path.join(script_dir, "check_dependencies.py");
-		const {execFileSync} = require('child_process');
+		const { execFileSync } = require('child_process');
 		try {
 			let stdout = execFileSync(python_path, [script_path]);
-			if (stdout.toString() == 1){
-					err_message = "The Matlab Engine for Python seems to not be installed correctly";
-					checked_setup = false;
+			if (stdout.toString() == 1) {
+				err_message = "The Matlab Engine for Python seems to not be installed correctly";
+				checked_setup = false;
 			}
 		}
-		catch(error) { // If an error is caught, it means Python cannot be called
+		catch (error) { // If an error is caught, it means Python cannot be called
 			err_message = "Python is not installed or its path is incorrectly specified";
 			checked_setup = false;
 		}
-		return(checked_setup);
+		return (checked_setup);
 	};
 
 
@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let script_path = path.join(script_dir, "ml_terminal.py");
 		python_path = getPythonPath();
 		correct_setup = checkSetup();
-		if (correct_setup){
+		if (correct_setup) {
 			const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 			terminal.sendText(python_path + util.format(" \"%s\"", script_path));
 			terminal.show(false);
@@ -74,8 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const terminalFallback = (activeTerminal: vscode.Terminal | undefined) => {
 		// The terminal is not opened if there is already a current one
-		if (activeTerminal === undefined || (activeTerminal && activeTerminal.name !== "Matlab REPL"))
-		{
+		if (activeTerminal === undefined || (activeTerminal && activeTerminal.name !== "Matlab REPL")) {
 			openMlTerminal();
 		}
 	};
@@ -84,7 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const runMlScript = () => {
 		let activeTextEditor = vscode.window.activeTextEditor;
 		let activeTerminal = vscode.window.activeTerminal;
-		if (activeTextEditor){
+		if (activeTextEditor) {
 			activeTextEditor.document.save();
 			let current_file = activeTextEditor.document.fileName;
 			let script_path = path.join(script_dir, "ml_script.py");
@@ -94,16 +93,15 @@ export function activate(context: vscode.ExtensionContext) {
 				activeTerminal.sendText(util.format("run(\"%s\")", current_file));
 				activeTerminal.show(false);
 			}
-			else
-			{
+			else {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
-				if (correct_setup){
+				if (correct_setup) {
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, current_file));
 					terminal.show(false);
 				}
-				else{
+				else {
 					console.log(err_message);
 					vscode.window.showErrorMessage(err_message);
 				}
@@ -115,17 +113,17 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 	context.subscriptions.push(vscode.commands.registerCommand('extension.runMatlabScript', runMlScript));
 
-	
+
 	const runMlSelection = () => {
 		let activeTextEditor = vscode.window.activeTextEditor;
 		let activeTerminal = vscode.window.activeTerminal;
-		if (activeTextEditor){
+		if (activeTextEditor) {
 			var current_selection = null;
 			var cwd = path.dirname(activeTextEditor.document.uri.fsPath); // Get current file directory
 			if (cwd.charAt(1) === ':') { // Hack to have drive letter in uppercase
 				cwd = cwd.charAt(0).toUpperCase() + cwd.slice(1);
-			} 
-			if (activeTextEditor.selection.isEmpty){ // Run current line if selection is empty
+			}
+			if (activeTextEditor.selection.isEmpty) { // Run current line if selection is empty
 				current_selection = activeTextEditor.document.lineAt(activeTextEditor.selection.active).text;
 			}
 			else {
@@ -133,7 +131,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 			let script_path = path.join(script_dir, "ml_selection.py");
 			let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
-			if (!fs.existsSync(tempDir)){
+			if (!fs.existsSync(tempDir)) {
 				fs.mkdirSync(tempDir);
 			}
 			else {
@@ -149,16 +147,15 @@ export function activate(context: vscode.ExtensionContext) {
 				activeTerminal.sendText(util.format("run(\"%s\")", tempPath));
 				activeTerminal.show(false);
 			}
-			else
-			{
+			else {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
-				if (correct_setup){
+				if (correct_setup) {
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, tempPath));
 					terminal.show(false);
 				}
-				else{
+				else {
 					console.log(err_message);
 					vscode.window.showErrorMessage(err_message);
 				}
@@ -173,4 +170,4 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
