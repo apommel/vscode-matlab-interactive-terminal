@@ -121,17 +121,26 @@ export function activate(context: vscode.ExtensionContext) {
 		let activeTerminal = vscode.window.activeTerminal;
 		if (activeTextEditor){
 			var current_selection = null;
-			var cwd = util.format("%s", path.dirname(activeTextEditor.document.uri.fsPath)); // Get current file directory
+			var cwd = path.dirname(activeTextEditor.document.uri.fsPath); // Get current file directory
+			if (cwd.charAt(1) === ':') { // Hack to have drive letter in uppercase
+				cwd = cwd.charAt(0).toUpperCase() + cwd.slice(1);
+			} 
 			if (activeTextEditor.selection.isEmpty){ // Run current line if selection is empty
 				current_selection = activeTextEditor.document.lineAt(activeTextEditor.selection.active).text;
 			}
 			else {
-				current_selection = `cd ${cwd}\n`.concat(activeTextEditor.document.getText(activeTextEditor.selection));
+				current_selection = `cd \'${cwd}\'\n`.concat(activeTextEditor.document.getText(activeTextEditor.selection));
 			}
 			let script_path = path.join(script_dir, "ml_selection.py");
 			let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
 			if (!fs.existsSync(tempDir)){
 				fs.mkdirSync(tempDir);
+			}
+			else {
+				var file_list = fs.readdirSync(tempDir);
+				for (const file of file_list) {
+					fs.unlinkSync(path.join(tempDir, file));
+				}
 			}
 			let tempPath = path.join(tempDir, 'temp.m');
 			fs.writeFileSync(tempPath, current_selection);
