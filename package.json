@@ -1,8 +1,8 @@
 {
-	"name": "matlab-interactive-terminal",
-	"displayName": "Matlab Interactive Terminal",
+	"name": "matlab-interactive-terminal-ribomver",
+	"displayName": "Matlab Interactive Terminal - Ribomver.",
 	"description": "Interactive MATLAB terminal for Visual Studio Code, compatible with Windows, Mac and Linux",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"publisher": "apommel",
 	"license": "SEE LICENSE",
 	"icon": "images/icon.png",
@@ -27,7 +27,7 @@
 		"commands": [
 			{
 				"command": "extension.openMatlabTerminal",
-				"title": "Open a Matlab Terminal"
+				"title": "Open/link to a Matlab Terminal"
 			},
 			{
 				"command": "extension.runMatlabScript",

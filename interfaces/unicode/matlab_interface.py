@@ -23,7 +23,7 @@ else:
 class MatlabInterface:
     global import_fail
 
-    def __init__(self):
+    def __init__(self, matlab_session = ''):
         # OS checks related work
         if os.name == 'nt':
             self.cls_str = 'cls'
@@ -31,8 +31,16 @@ class MatlabInterface:
             self.cls_str = 'clear'
         self.clear()
         if not import_fail:
-            print("Starting Matlab...")
-            self.eng = matlab.engine.start_matlab()
+            if matlab_session in matlab.engine.find_matlab():
+                # link to a shared session of MATLAB
+                print("MATLAB session",matlab_session,"detected, Link to this one.")
+                self.eng = matlab.engine.connect_matlab(matlab_session)
+            elif matlab.engine.find_matlab():
+                print("No MATLAB session with input name. Link to the first detected one instead.")
+                self.eng = matlab.engine.connect_matlab()
+            else:
+                print("Cannot find a running MATLAB session.Start a new one.")
+                self.eng = matlab.engine.start_matlab()
         else:
             print("Could not start Matlab")
 

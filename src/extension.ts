@@ -76,8 +76,24 @@ export function activate(context: vscode.ExtensionContext) {
 		correct_setup = checkSetup();
 		if (correct_setup) {
 			const terminal = vscode.window.createTerminal(terminalLaunchOpt);
-			terminal.sendText(python_path + util.format(" \"%s\"", script_path));
-			terminal.show(false);
+			let run_matlab_session = () => {
+				return vscode.window.showInputBox(
+					{
+						ignoreFocusOut: true,
+						placeHolder: 'Name of your matlab session. Check with matlab.engine.engineName',
+						prompt: 'Please input the name of your matlab session, leave empty if you want to start a new one.'
+					}
+				);
+			};
+			run_matlab_session().then((matlab_session_name) => {
+				if (matlab_session_name) {
+					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, matlab_session_name));
+				}
+				else {
+					terminal.sendText(python_path + util.format(" \"%s\"", script_path));
+				}
+				terminal.show(false);
+			});
 		}
 		else {
 			console.log(err_message);
