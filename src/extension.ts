@@ -163,7 +163,9 @@ export function activate(context: vscode.ExtensionContext) {
 			{
 				activeTerminal.sendText(util.format("clear(\"%s\")", tempPath)); // Force Matlab to reload the scripts
 				activeTerminal.sendText(util.format("run(\"%s\")", tempPath));
-				activeTerminal.show(false);
+				if (vscode.workspace.getConfiguration("matlab-interactive-terminal").get("CursorBack")===false) {
+					activeTerminal.show(false);
+				}
 			}
 			else {
 				python_path = getPythonPath();

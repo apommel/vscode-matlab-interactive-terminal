@@ -50,6 +50,11 @@
 					"type": "boolean",
 					"default": "false",
 					"description": "Displays unicode characters (ex: CJK characters) in Matlab output (N.B.: output will not be in real time)"
+				},
+				"matlab-interactive-terminal.CursorBack":{
+					"type":"boolean",
+					"default":"true",
+					"description": "Deciding whether to make the cursor fall back onto your editor when you excute the command 'Run Current Selection' "
 				}
 			}
 		}
