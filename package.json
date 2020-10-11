@@ -51,9 +51,9 @@
 					"default": "false",
 					"description": "Displays unicode characters (ex: CJK characters) in Matlab output (N.B.: output will not be in real time)"
 				},
-				"matlab-interactive-terminal.CursorBack":{
-					"type":"boolean",
-					"default":"true",
+				"matlab-interactive-terminal.CursorBack": {
+					"type": "boolean",
+					"default": "true",
 					"description": "Decides whether to make the cursor fall back onto your editor when you execute the command 'Run current selection' "
 				}
 			}
@@ -67,15 +67,15 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/glob": "^7.1.1",
+		"@types/glob": "^7.1.3",
 		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.12.37",
-		"@types/vscode": "^1.44.0",
+		"@types/node": "^12.12.67",
+		"@types/vscode": "^1.50.0",
 		"glob": "^7.1.5",
 		"mocha": "^6.2.3",
 		"tslint": "^5.20.0",
-		"typescript": "^3.8.3",
-		"vscode-test": "^1.2.2"
+		"typescript": "^3.9.7",
+		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {}
 }
