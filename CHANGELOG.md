@@ -2,6 +2,12 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## [0.3.3] - 2020-10-11
+### Added
+- Option to choose to switch focus to terminal or not (weihongliang233 #24)
+### Fixed
+- Cases where run selection was running behind #12 (fixed by weihongliang233 #19)
+
 ## [0.3.2] - 2020-04-26
 ### Added
 - Added option to use unicode output, as if activated the output is not in real-time
