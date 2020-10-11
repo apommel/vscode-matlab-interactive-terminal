@@ -54,7 +54,7 @@
 				"matlab-interactive-terminal.CursorBack":{
 					"type":"boolean",
 					"default":"true",
-					"description": "Deciding whether to make the cursor fall back onto your editor when you excute the command 'Run Current Selection' "
+					"description": "Decides whether to make the cursor fall back onto your editor when you execute the command 'Run current selection' "
 				}
 			}
 		}
