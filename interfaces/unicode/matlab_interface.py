@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Aurélien Pommel
+# Copyright (c) 2020 Aurelien Pommel
 
 # Trying to have a basic Python 2 compatibility
 from __future__ import print_function

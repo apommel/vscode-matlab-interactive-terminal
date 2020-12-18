@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Aurélien Pommel
+# Copyright (c) 2020 Aurelien Pommel
 
 # Checks if the necessary Python dependencies are present on the system at activation
 try: # Check if the Matlab Engine is installed
