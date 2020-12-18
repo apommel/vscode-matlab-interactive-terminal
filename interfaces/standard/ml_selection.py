@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Aurelien Pommel
+# Developed by Aurelien Pommel and other contributors
 
 from matlab_interface import MatlabInterface
 import sys
