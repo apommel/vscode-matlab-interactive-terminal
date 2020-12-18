@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		catch (error) { // If an error is caught, it means Python cannot be called
-			err_message = "Python is not installed or its path is incorrectly specified";
+			err_message = error.message;
 			checked_setup = false;
 		}
 		return (checked_setup);
