@@ -187,6 +187,18 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 	context.subscriptions.push(vscode.commands.registerCommand('extension.runMatlabSelection', runMlSelection));
 
+	const runCurrentBlock=()=>{
+		var code_block_extension =  vscode.extensions.getExtension("weihongliang233.code-block");
+		if(code_block_extension){
+			vscode.commands.executeCommand("code-block.selectCurrentBlock");
+			runMlSelection();
+		}
+		else{
+			vscode.window.showErrorMessage('Extension "weihongliang233.code-block" not installed');
+		}
+		
+	};
+	context.subscriptions.push(vscode.commands.registerCommand('extension.runCurrentBlock',runCurrentBlock));
 }
 
 // this method is called when your extension is deactivated
