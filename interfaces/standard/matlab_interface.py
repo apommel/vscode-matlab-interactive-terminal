@@ -9,7 +9,7 @@ except NameError:
     pass
 
 import os
-import io
+from io import StringIO
 from contextlib import redirect_stdout
 from textwrap import dedent
 
@@ -62,7 +62,7 @@ class MatlabInterface:
         os.system(self.cls_str)
 
     def version(self):
-        strio = io.StringIO()
+        strio = StringIO()
 
         with redirect_stdout(strio) as f:
             version_str = "version '-release'"

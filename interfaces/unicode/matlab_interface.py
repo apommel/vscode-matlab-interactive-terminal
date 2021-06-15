@@ -9,6 +9,8 @@ except NameError:
 
 import os
 from io import StringIO
+from contextlib import redirect_stdout
+from textwrap import dedent
 
 global import_fail
 try: # Check if the Matlab Engine is installed
@@ -56,6 +58,15 @@ class MatlabInterface:
 
     def clear(self):
         os.system(self.cls_str)
+
+    def version(self):
+        strio = StringIO()
+
+        with redirect_stdout(strio) as f:
+            version_str = "version '-release'"
+            self.eng.eval(version_str, nargout=0)
+
+        return f.getvalue()
 
     def run_script(self, script_path):
         if not import_fail:
