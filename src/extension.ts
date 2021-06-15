@@ -68,9 +68,12 @@ export function activate(context: vscode.ExtensionContext) {
 		return (checked_setup);
 	};
 
+	let terminal_launching: boolean = false;
+
 	const switchToMatlabTerminal = (terminal: vscode.Terminal) => {
-		if (terminal.name === "MATLAB") {
+		if (terminal_launching && terminal.name === "MATLAB") {
 			terminal.show(false);
+			terminal_launching = false;
 		}
 	};
 
@@ -80,6 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
 		python_path = getPythonPath();
 		correct_setup = checkSetup();
 		if (correct_setup) {
+			terminal_launching = true;
 			vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 			const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 			terminal.sendText(python_path + util.format(" \"%s\"", script_path));
@@ -118,6 +122,7 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
+				terminal_launching = true;
 					vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, current_file));
@@ -176,6 +181,7 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
+				terminal_launching = true;
 					vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, tempPath));
