@@ -48,7 +48,7 @@ class MatlabInterface:
                 
                 For product information, visit https://www.mathworks.com.\
                 '''.format(version=self.version())
-                print(intro)
+                print(dedent(intro))
 
             except Exception as e:
                 self.clear()
