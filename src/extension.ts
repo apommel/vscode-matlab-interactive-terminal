@@ -122,7 +122,7 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
-				terminal_launching = true;
+					terminal_launching = true;
 					vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, current_file));
