@@ -9,8 +9,6 @@ except NameError:
     pass
 
 import os
-from io import StringIO
-from contextlib import redirect_stdout
 from textwrap import dedent
 
 global import_fail

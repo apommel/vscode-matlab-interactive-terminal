@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 		else {
 			script_dir = path.join(ext_dir, "/interfaces/standard");
 		}
-	}
+	};
 	getUnicodeOption();
 
 	// Check the dependencies and inform the user
@@ -56,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const { execFileSync } = require("child_process");
 		try {
 			let stdout = execFileSync(python_path, [script_path]);
-			if (stdout.toString() == 1) {
+			if (stdout.toString() === '1') {
 				err_message = "The Matlab Engine for Python seems to not be installed correctly";
 				checked_setup = false;
 			}
@@ -68,25 +68,16 @@ export function activate(context: vscode.ExtensionContext) {
 		return (checked_setup);
 	};
 
-	let terminal_launching: boolean = false;
-
-	const switchToMatlabTerminal = (terminal: vscode.Terminal) => {
-		if (terminal_launching && terminal.name === "MATLAB") {
-			terminal.show(false);
-			terminal_launching = false;
-		}
-	};
-
 	const openMatlabTerminal = () => {
 		getUnicodeOption();
 		let script_path = path.join(script_dir, "ml_terminal.py");
 		python_path = getPythonPath();
 		correct_setup = checkSetup();
 		if (correct_setup) {
-			terminal_launching = true;
-			vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 			const terminal = vscode.window.createTerminal(terminalLaunchOpt);
+			terminal.hide();
 			terminal.sendText(python_path + util.format(" \"%s\"", script_path));
+			terminal.show();
 		}
 		else {
 			console.log(err_message);
@@ -122,10 +113,10 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
-					terminal_launching = true;
-					vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
+					terminal.hide();
 					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, current_file));
+					terminal.show();
 				}
 				else {
 					console.log(err_message);
@@ -157,22 +148,21 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 			getUnicodeOption();
 			let script_path = path.join(script_dir, "ml_selection.py");
-			let tempDir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
-			if (!fs.existsSync(tempDir)) {
-				fs.mkdirSync(tempDir);
+			let temp_dir = path.join(ext_dir, "temp"); // A temp file and directory are created in the ext dir
+			if (!fs.existsSync(temp_dir)) {
+				fs.mkdirSync(temp_dir);
 			}
 			else {
-				var file_list = fs.readdirSync(tempDir);
+				var file_list = fs.readdirSync(temp_dir);
 				for (const file of file_list) {
-					fs.unlinkSync(path.join(tempDir, file));
+					fs.unlinkSync(path.join(temp_dir, file));
 				}
 			}
-			let tempPath = path.join(tempDir, "temp.m");
-			fs.writeFileSync(tempPath, current_selection);
-			if (activeTerminal && activeTerminal.name === "MATLAB") // If already a Matlab Engine started, the selection is run in it
-			{
-				activeTerminal.sendText(util.format("clear(\"%s\")", tempPath)); // Force Matlab to reload the scripts
-				activeTerminal.sendText(util.format("run(\"%s\")", tempPath));
+			let temp_path = path.join(temp_dir, "temp.m");
+			fs.writeFileSync(temp_path, current_selection);
+			if (activeTerminal && activeTerminal.name === "MATLAB") { // If already a Matlab Engine started, the selection is run in it
+				activeTerminal.sendText(util.format("clear(\"%s\")", temp_path)); // Force Matlab to reload the scripts
+				activeTerminal.sendText(util.format("run(\"%s\")", temp_path));
 				if (vscode.workspace.getConfiguration("matlab-interactive-terminal").get("CursorBack")===false) {
 					activeTerminal.show(false);
 				}
@@ -181,10 +171,10 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
-				terminal_launching = true;
-					vscode.window.onDidOpenTerminal(switchToMatlabTerminal);
 					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
-					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, tempPath));
+					terminal.hide();
+					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, temp_path));
+					terminal.show();
 				}
 				else {
 					console.log(err_message);
