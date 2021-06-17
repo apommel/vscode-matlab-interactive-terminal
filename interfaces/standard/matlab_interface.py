@@ -39,7 +39,7 @@ class MatlabInterface:
             try:
                 self.eng = matlab.engine.start_matlab()
                 intro = '''\
-                MATLAB Interactive Terminal (R{version})
+                MATLAB Interactive Terminal (R{release})
                 
                 To get started, type one of these commands:
                     helpwin          Provide access to help comments for all functions
@@ -47,7 +47,7 @@ class MatlabInterface:
                     demo             Access product examples in Help browser
                 
                 For product information, visit https://www.mathworks.com.\
-                '''.format(version=self.version())
+                '''.format(release=self.release())
                 print(dedent(intro))
 
             except Exception as e:
@@ -61,14 +61,10 @@ class MatlabInterface:
     def clear(self):
         os.system(self.cls_str)
 
-    def version(self):
-        strio = StringIO()
-
-        with redirect_stdout(strio) as f:
-            version_str = "version '-release'"
-            self.eng.eval(version_str, nargout=0)
-
-        return f.getvalue()
+    def release(self):
+        release_str = "version '-release';"
+        res = self.eng.eval(release_str)
+        return res
 
     def run_script(self, script_path):
         if not import_fail:
