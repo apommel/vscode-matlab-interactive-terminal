@@ -5,14 +5,14 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as util from "util";
-import * as fs from 'fs';
+import * as fs from "fs";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Get basic directories informations
-	const ext_dir = context.asAbsolutePath('');
+	// Get basic directory information
+	const ext_dir = context.asAbsolutePath("");
 	let script_dir = path.join(ext_dir, "/interfaces/standard");
 
 	// Get configuration parameters
@@ -56,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const { execFileSync } = require("child_process");
 		try {
 			let stdout = execFileSync(python_path, [script_path]);
-			if (stdout.toString() === '1') {
+			if (stdout.toString() === "1") {
 				err_message = "The Matlab Engine for Python seems to not be installed correctly";
 				checked_setup = false;
 			}
@@ -137,7 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (activeTextEditor) {
 			var current_selection = null;
 			var cwd = path.dirname(activeTextEditor.document.uri.fsPath); // Get current file directory
-			if (cwd.charAt(1) === ':') { // Hack to have drive letter in uppercase
+			if (cwd.charAt(1) === ":") { // Hack to have drive letter in uppercase
 				cwd = cwd.charAt(0).toUpperCase() + cwd.slice(1);
 			}
 			if (activeTextEditor.selection.isEmpty) { // Run current line if selection is empty
