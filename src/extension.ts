@@ -57,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			let stdout = execFileSync(python_path, [script_path]);
 			if (stdout.toString() === "1") {
-				err_message = "The Matlab Engine for Python seems to not be installed correctly";
+				err_message = "MATLAB Engine for Python seems to not be installed correctly";
 				checked_setup = false;
 			}
 		}

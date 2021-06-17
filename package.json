@@ -50,7 +50,7 @@
 				"matlab-interactive-terminal.unicodeSwitch": {
 					"type": "boolean",
 					"default": "false",
-					"description": "Displays unicode characters (ex: CJK characters) in Matlab output (N.B.: output will not be in real time)"
+					"description": "Displays Unicode characters (ex: CJK characters) in MATLAB output (N.B.: output will not be in real time)"
 				},
 				"matlab-interactive-terminal.CursorBack": {
 					"type": "boolean",

@@ -16,7 +16,7 @@ try: # Check if the Matlab Engine is installed
     import matlab.engine
     from matlab.engine import RejectedExecutionError as MatlabTerminated
 except ImportError:
-    print("Matlab Engine for Python cannot be detected. Please install it for the extension to work.")
+    print("MATLAB Engine for Python cannot be detected. Please install it for the extension to work.")
     import_fail = True
 else:
     import_fail = False
@@ -106,9 +106,9 @@ class MatlabInterface:
 
             except MatlabTerminated:
                 print(stream.getvalue(), err_stream.getvalue(), sep="\n")
-                print("Matlab terminated. Restarting the engine...")
+                print("MATLAB terminated. Restarting the engine...")
                 self.eng = matlab.engine.start_matlab()
-                print("Matlab restarted")
+                print("MATLAB restarted")
 
             except : # The other exceptions are handled by Matlab
                 print(stream.getvalue(), err_stream.getvalue(), sep="\n")
