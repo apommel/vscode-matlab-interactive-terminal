@@ -60,7 +60,7 @@ class MatlabInterface:
         os.system(self.cls_str)
 
     def release(self):
-        release_str = "version '-release';"
+        release_str = "version('-release');"
         res = self.eng.eval(release_str)
         return res
 
