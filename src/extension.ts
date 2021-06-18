@@ -16,29 +16,60 @@ export function activate(context: vscode.ExtensionContext) {
 	let script_dir = path.join(ext_dir, "/interfaces/standard");
 
 	// Get configuration parameters
+	const getConfigMap = () => {
+		return vscode.workspace.getConfiguration("matlab-interactive-terminal");
+	};
+
+	// Get Python interpreter path
 	const getPythonPath = () => {
-		let extConfig = vscode.workspace.getConfiguration("matlab-interactive-terminal");
+		const PATH: string = (process.env || {}).PATH || "";
+		const pythonDirRegex: RegExp = new RegExp("Python(\\27|37|38)\\" + path.sep + "$");
+
+		let extConfig = getConfigMap();
 		let python_path: string;
 		let pythonPathSetting: string | undefined;
 		pythonPathSetting = extConfig.get("pythonPath");
+
 		if (pythonPathSetting) {
 			python_path = path.normalize(pythonPathSetting);
 		}
 		else {
-			python_path = "python";
+            python_path = PATH
+                .split(path.delimiter)
+                .filter(dir => pythonDirRegex.test(dir))
+                .sort((dir1: string, dir2: string) => {
+					const dirMatch1 = dir1.match(pythonDirRegex) || [] as RegExpMatchArray;
+					const dirMatch2 = dir2.match(pythonDirRegex) || [] as RegExpMatchArray;
+					return parseFloat(dirMatch1[1] || "0") - parseFloat(dirMatch2[1] || "0");
+				})[0];
+			python_path += "python.exe";
 		}
+
 		console.log(python_path);
-		return (python_path);
+		if (!python_path.length) {
+			let err_message = "The Python interpreter is not configured and missing in the PATH environment variable.";
+			vscode.window.showErrorMessage(err_message);
+		}
+		else {
+			return python_path;
+		}
 	};
-	let python_path = getPythonPath();
-	let terminalLaunchOpt: vscode.TerminalOptions = { name: "MATLAB", hideFromUser: true };
+	let python_path: string | undefined = getPythonPath();
+
+	// Set up common terminal options
+	let terminalLaunchOptions: vscode.TerminalOptions = {
+		name: "MATLAB",
+		shellArgs: python_path
+	};
 
 	const getUnicodeOption = () => {
-		let extConfig = vscode.workspace.getConfiguration("matlab-interactive-terminal");
-		let option: Boolean | undefined;
-		option = extConfig.get("unicodeSwitch");
-		if (option === undefined) { option = false; }
-		if (option) {
+		let extConfig = getConfigMap();
+		let unicodeOption: boolean | undefined;
+		unicodeOption = extConfig.get("unicodeSwitch");
+		if (unicodeOption === undefined) {
+			unicodeOption = false;
+		}
+		if (unicodeOption) {
 			script_dir = path.join(ext_dir, "/interfaces/unicode");
 		}
 		else {
@@ -50,22 +81,26 @@ export function activate(context: vscode.ExtensionContext) {
 	// Check the dependencies and inform the user
 	let err_message = "";
 	let correct_setup: boolean;
+
 	const checkSetup = () => {
 		let checked_setup = true;
 		let script_path = path.join(script_dir, "check_dependencies.py");
 		const { execFileSync } = require("child_process");
+		if (!python_path) {
+			return false;
+		}
 		try {
 			let stdout = execFileSync(python_path, [script_path]);
 			if (stdout.toString() === "1") {
-				err_message = "MATLAB Engine for Python seems to not be installed correctly";
-				checked_setup = false;
+				err_message = "MATLAB Engine for Python seems to not be installed correctly.";
+				return false;
 			}
 		}
 		catch (error) { // If an error is caught, it means Python cannot be called
 			err_message = error.message;
-			checked_setup = false;
+			return false;
 		}
-		return (checked_setup);
+		return true;
 	};
 
 	const openMatlabTerminal = () => {
@@ -74,10 +109,10 @@ export function activate(context: vscode.ExtensionContext) {
 		python_path = getPythonPath();
 		correct_setup = checkSetup();
 		if (correct_setup) {
-			const terminal = vscode.window.createTerminal(terminalLaunchOpt);
-			terminal.hide();
-			terminal.sendText(python_path + util.format(" \"%s\"", script_path));
-			terminal.show();
+			const opts: vscode.TerminalOptions = { ...terminalLaunchOptions };
+			opts.shellPath = python_path;
+			opts.shellArgs = [script_path];
+			vscode.window.createTerminal(opts).show(false);;
 		}
 		else {
 			console.log(err_message);
@@ -113,10 +148,10 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
-					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
-					terminal.hide();
-					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, current_file));
-					terminal.show();
+					const opts: vscode.TerminalOptions = { ...terminalLaunchOptions };
+					opts.shellPath = python_path;
+					opts.shellArgs = [script_path, current_file];
+					vscode.window.createTerminal(opts).show(false);
 				}
 				else {
 					console.log(err_message);
@@ -163,7 +198,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (activeTerminal && activeTerminal.name === "MATLAB") { // If already a Matlab Engine started, the selection is run in it
 				activeTerminal.sendText(util.format("clear(\"%s\")", temp_path)); // Force Matlab to reload the scripts
 				activeTerminal.sendText(util.format("run(\"%s\")", temp_path));
-				if (vscode.workspace.getConfiguration("matlab-interactive-terminal").get("CursorBack")===false) {
+				if (getConfigMap().get("CursorBack") === false) {
 					activeTerminal.show(false);
 				}
 			}
@@ -171,10 +206,10 @@ export function activate(context: vscode.ExtensionContext) {
 				python_path = getPythonPath();
 				correct_setup = checkSetup();
 				if (correct_setup) {
-					const terminal = vscode.window.createTerminal(terminalLaunchOpt);
-					terminal.hide();
-					terminal.sendText(python_path + util.format(" \"%s\" \"%s\"", script_path, temp_path));
-					terminal.show();
+					const opts: vscode.TerminalOptions = { ...terminalLaunchOptions };
+					opts.shellPath = python_path;
+					opts.shellArgs = [script_path, temp_path];
+					vscode.window.createTerminal(opts).show(false);
 				}
 				else {
 					console.log(err_message);
