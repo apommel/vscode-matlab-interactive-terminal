@@ -83,7 +83,6 @@ export function activate(context: vscode.ExtensionContext) {
 	let correct_setup: boolean;
 
 	const checkSetup = () => {
-		let checked_setup = true;
 		let script_path = path.join(script_dir, "check_dependencies.py");
 		const { execFileSync } = require("child_process");
 		if (!python_path) {
