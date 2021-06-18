@@ -22,37 +22,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Get Python interpreter path
 	const getPythonPath = () => {
-		const PATH: string = (process.env || {}).PATH || "";
-		const pythonDirRegex: RegExp = new RegExp("Python(\\27|37|38)\\" + path.sep + "$");
-
 		let extConfig = getConfigMap();
 		let python_path: string;
 		let pythonPathSetting: string | undefined;
 		pythonPathSetting = extConfig.get("pythonPath");
 
-		if (pythonPathSetting) {
-			python_path = path.normalize(pythonPathSetting);
-		}
-		else {
-            python_path = PATH
-                .split(path.delimiter)
-                .filter(dir => pythonDirRegex.test(dir))
-                .sort((dir1: string, dir2: string) => {
-					const dirMatch1 = dir1.match(pythonDirRegex) || [] as RegExpMatchArray;
-					const dirMatch2 = dir2.match(pythonDirRegex) || [] as RegExpMatchArray;
-					return parseFloat(dirMatch1[1] || "0") - parseFloat(dirMatch2[1] || "0");
-				})[0];
-			python_path += "python.exe";
-		}
+		python_path = pythonPathSetting
+			? path.normalize(pythonPathSetting)
+			: "python";
 
-		console.log(python_path);
-		if (!python_path.length) {
-			let err_message = "The Python interpreter is not configured and missing in the PATH environment variable.";
-			vscode.window.showErrorMessage(err_message);
-		}
-		else {
-			return python_path;
-		}
+		return python_path;
 	};
 	let python_path: string | undefined = getPythonPath();
 
