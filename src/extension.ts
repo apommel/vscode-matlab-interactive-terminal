@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Set up common terminal options
 	let terminalLaunchOptions: vscode.TerminalOptions = {
 		name: "MATLAB",
-		shellArgs: python_path
+		shellPath: python_path
 	};
 
 	const getUnicodeOption = () => {
