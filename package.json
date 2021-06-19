@@ -4,7 +4,7 @@
 	"description": "Interactive MATLAB terminal for Visual Studio Code, compatible with Windows, Mac and Linux",
 	"version": "0.3.4",
 	"publisher": "apommel",
-	"license": "SEE LICENSE",
+	"license": "MIT",
 	"icon": "images/icon.png",
 	"repository": {
 		"type": "git",
@@ -72,9 +72,11 @@
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.12.67",
 		"@types/vscode": "^1.50.0",
+		"@typescript-eslint/eslint-plugin": "^4.27.0",
+		"@typescript-eslint/parser": "^4.27.0",
+		"eslint": "^7.28.0",
 		"glob": "^7.1.5",
 		"mocha": "^6.2.3",
-		"tslint": "^5.20.0",
 		"typescript": "^3.9.7",
 		"vscode-test": "^1.4.0"
 	},
