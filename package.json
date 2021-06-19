@@ -18,24 +18,25 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.openMatlabTerminal",
-		"onCommand:extension.runMatlabScript",
-		"onCommand:extension.runMatlabSelection"
+		"onLanguage:matlab",
+		"onCommand:matlab-interactive-terminal.openMatlabTerminal",
+		"onCommand:matlab-interactive-terminal.runMatlabScript",
+		"onCommand:matlab-interactive-terminal.runMatlabSelection"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.openMatlabTerminal",
-				"title": "Open a Matlab Terminal"
+				"command": "matlab-interactive-terminal.openMatlabTerminal",
+				"title": "Open a MATLAB Terminal"
 			},
 			{
-				"command": "extension.runMatlabScript",
-				"title": "Run current Matlab Script"
+				"command": "matlab-interactive-terminal.runMatlabScript",
+				"title": "Run current MATLAB Script"
 			},
 			{
-				"command": "extension.runMatlabSelection",
-				"title": "Run current selection in Matlab"
+				"command": "matlab-interactive-terminal.runMatlabSelection",
+				"title": "Run current selection in MATLAB"
 			}
 		],
 		"configuration": {
@@ -49,7 +50,7 @@
 				"matlab-interactive-terminal.unicodeSwitch": {
 					"type": "boolean",
 					"default": "false",
-					"description": "Displays unicode characters (ex: CJK characters) in Matlab output (N.B.: output will not be in real time)"
+					"description": "Displays Unicode characters (ex: CJK characters) in MATLAB output (N.B.: output will not be in real time)"
 				},
 				"matlab-interactive-terminal.CursorBack": {
 					"type": "boolean",
