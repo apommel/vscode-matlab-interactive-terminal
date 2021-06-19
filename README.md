@@ -8,7 +8,7 @@ Matlab Interactive Terminal is an extension for Visual Studio Code that allows u
 - **MATLAB** R2014b (Matlab 8.4) or higher
 - **MATLAB Engine API for Python**, installations instructions are available [here](https://www.mathworks.com/help/matlab/matlab_external/install-the-matlab-engine-for-python.html)
 
-N.B.: The Python requirements may vary depending on the installed MATLAB version. More informations about MATLAB-Python compatibility are available on [MathWorks website](https://www.mathworks.com/help/matlab/matlab_external/system-requirements-for-matlab-engine-for-python.html).
+N.B.: The Python requirements may vary depending on the installed MATLAB version. More information about MATLAB-Python compatibility is available on [MathWorks website](https://www.mathworks.com/help/matlab/matlab_external/system-requirements-for-matlab-engine-for-python.html).
 
 ## Features
 
