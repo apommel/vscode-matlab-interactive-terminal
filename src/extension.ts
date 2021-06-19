@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Aurélien Pommel
+// Developed by Aurelien Pommel and other contributors
 
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below

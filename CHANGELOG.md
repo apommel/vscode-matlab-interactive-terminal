@@ -2,6 +2,10 @@
 
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
+## Master
+### Improved
+- Boot experience and help messages (4086606 #34)
+
 ## [0.3.4] - 2020-12-18
 ### Fixed
 - Cannot find Python path caused by encoding errors (fixed by TheBrenny #27)
