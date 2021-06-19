@@ -90,7 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const opts: vscode.TerminalOptions = { ...terminalLaunchOptions };
 			opts.shellPath = python_path;
 			opts.shellArgs = [script_path];
-			vscode.window.createTerminal(opts).show(false);;
+			vscode.window.createTerminal(opts).show(false);
 		}
 		else {
 			console.log(err_message);
