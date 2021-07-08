@@ -201,6 +201,23 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 	context.subscriptions.push(vscode.commands.registerCommand("matlab-interactive-terminal.runMatlabSelection", runMatlabSelection));
 
+	const resetPythonPath = () => {
+		pythonPath = getPythonPath();
+	};
+	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(resetPythonPath));
+
+	const matlabTerminalProfile: vscode.TerminalProfileProvider = {
+		provideTerminalProfile() {
+			return {
+				options: {
+					...terminalLaunchOptions,
+					shellArgs: [terminalPath]
+				}
+			};
+		}
+	};
+	context.subscriptions.push(vscode.window.registerTerminalProfileProvider('matlab-interactive-terminal.terminal-profile', matlabTerminalProfile));
+
 }
 
 // this method is called when your extension is deactivated

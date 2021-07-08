@@ -58,6 +58,15 @@
 					"description": "Decides whether to make the cursor fall back onto your editor when you execute the command 'Run current selection' "
 				}
 			}
+		},
+		"terminal": {
+			"profiles": [
+				{
+					"id": "matlab-interactive-terminal.terminal-profile",
+					"icon": "variable-group",
+					"title": "MATLAB"
+				}
+			]
 		}
 	},
 	"scripts": {
@@ -71,13 +80,13 @@
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.12.67",
-		"@types/vscode": "^1.50.0",
-		"@typescript-eslint/eslint-plugin": "^4.27.0",
-		"@typescript-eslint/parser": "^4.27.0",
-		"eslint": "^7.28.0",
+		"@types/vscode": "^1.58.0",
+		"@typescript-eslint/eslint-plugin": "^4.28.0",
+		"@typescript-eslint/parser": "^4.28.0",
+		"eslint": "^7.30.0",
 		"glob": "^7.1.5",
 		"mocha": "^6.2.3",
-		"typescript": "^3.9.7",
+		"typescript": "^4.3.5",
 		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {}
