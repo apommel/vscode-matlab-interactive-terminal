@@ -67,7 +67,7 @@ class MatlabInterface:
     def run_script(self, script_path):
         if not import_fail:
             try:
-                print("File: \"%s\""%script_path)
+                print(">>> run(\"%s\")"%script_path)
                 self.eng.run(script_path, nargout=0)
 
             except MatlabTerminated:

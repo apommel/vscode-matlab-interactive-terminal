@@ -1,15 +1,45 @@
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
+import * as path from 'path';
 import * as vscode from 'vscode';
-// import * as myExtension from '../extension';
+import * as matlabInteractiveTerminal from '../../extension';
 
-suite('Extension Test Suite', () => {
+suite('MATLAB Interactive Terminal extension test suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('Sample test', () => {
-		assert.equal(-1, [1, 2, 3].indexOf(5));
-		assert.equal(-1, [1, 2, 3].indexOf(0));
+	test('openMatlabTerminal test', () => {
+		matlabInteractiveTerminal.openMatlabTerminal();
+		assert.strictEqual(vscode.window.activeTerminal?.name, matlabInteractiveTerminal.terminalLaunchOptions.name);
+	});
+
+	test('runMatlabScript test', () => {
+		openHelloWorld(() => {
+			matlabInteractiveTerminal.runMatlabScript();
+		});
+	});
+
+	test('runMatlabSelection test', () => {
+		openHelloWorld(document => {
+			const docLength = document.getText().length;
+			vscode.window.showTextDocument(document, {
+				selection: new vscode.Range(
+					new vscode.Position(1, 1),
+					new vscode.Position(1, docLength + 1)
+				)
+			}).then(editor => {
+				matlabInteractiveTerminal.runMatlabSelection();
+			});
+		});
 	});
 });
+
+function openHelloWorld(cb: (document: vscode.TextDocument) => void) {
+	vscode.workspace.updateWorkspaceFolders(
+		vscode.workspace.workspaceFolders
+			? vscode.workspace.workspaceFolders.length
+			: 0,
+		null,
+		{ uri: vscode.Uri.file(__dirname) }
+	);
+	const uri: vscode.Uri = vscode.Uri.file(path.join(__dirname, 'helloWorld.m'));
+	vscode.workspace.openTextDocument(uri).then(cb);
+}
