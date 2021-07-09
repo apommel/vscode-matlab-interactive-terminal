@@ -28,15 +28,20 @@
 		"commands": [
 			{
 				"command": "matlab-interactive-terminal.openMatlabTerminal",
-				"title": "Open a MATLAB Terminal"
+				"title": "Open a MATLAB Terminal",
+				"category": "Matlab Interactive Terminal"
 			},
 			{
 				"command": "matlab-interactive-terminal.runMatlabScript",
-				"title": "Run current MATLAB Script"
+				"title": "Run current MATLAB Script",
+				"category": "Matlab Interactive Terminal",
+				"when": "resourceExtname == .m || resourceLangId == matlab"
 			},
 			{
 				"command": "matlab-interactive-terminal.runMatlabSelection",
-				"title": "Run current selection in MATLAB"
+				"title": "Run current selection in MATLAB",
+				"category": "Matlab Interactive Terminal",
+				"when": "resourceExtname == .m || resourceLangId == matlab"
 			}
 		],
 		"configuration": {
