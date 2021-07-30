@@ -46,7 +46,7 @@ class MatlabInterface:
                 
                 For product information, visit https://www.mathworks.com.\
                 '''.format(release=self.release())
-                print(dedent(intro))
+                print(dedent(intro).strip())
 
             except MatlabTerminated as e:
                 self.clear()
