@@ -20,7 +20,7 @@ const pythonScripts: PythonScriptMap = {
 };
 
 // Basic directory information
-let extDir = __dirname;
+let extDir = path.resolve(__dirname, '..');
 let scriptDir = path.join(extDir, "/interfaces/standard");
 let terminalPath = path.join(scriptDir, pythonScripts.terminal);
 
