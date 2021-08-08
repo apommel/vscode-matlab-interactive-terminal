@@ -3,6 +3,8 @@
 All notable changes to the Matlab Interactive Terminal extension for Visual Studio Code will be documented in this file.
 
 ## Master
+### Added
+- Terminal profile support (SNDST00M #37)
 ### Improved
 - Boot experience and help messages (4086606 #34)
 
