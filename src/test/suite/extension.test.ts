@@ -1,23 +1,30 @@
-import * as assert from 'assert';
-import * as path from 'path';
-import * as vscode from 'vscode';
-import * as matlabInteractiveTerminal from '../../extension';
+import * as assert from "assert";
+import * as path from "path";
+import * as vscode from "vscode";
+import * as matlabInteractiveTerminal from "../../extension";
 
-suite('MATLAB Interactive Terminal extension test suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
+suite("MATLAB Interactive Terminal extension test suite", function () {
+	vscode.window.showInformationMessage("Start all tests.");
 
-	test('openMatlabTerminal test', () => {
+	test("openMatlabTerminal test", function (done) {
+		this.timeout(5000);
 		matlabInteractiveTerminal.openMatlabTerminal();
-		assert.strictEqual(vscode.window.activeTerminal?.name, matlabInteractiveTerminal.terminalLaunchOptions.name);
+		vscode.window.onDidChangeActiveTerminal(function () {
+			assert.strictEqual(
+				vscode.window.activeTerminal?.name,
+				matlabInteractiveTerminal.terminalLaunchOptions.name
+			);
+			done();
+		})
 	});
 
-	test('runMatlabScript test', () => {
-		openHelloWorld(() => {
+	test("runMatlabScript test", function () {
+		openHelloWorld(function () {
 			matlabInteractiveTerminal.runMatlabScript();
 		});
 	});
 
-	test('runMatlabSelection test', () => {
+	test("runMatlabSelection test", function () {
 		openHelloWorld(document => {
 			const docLength = document.getText().length;
 			vscode.window.showTextDocument(document, {
@@ -40,6 +47,6 @@ function openHelloWorld(cb: (document: vscode.TextDocument) => void) {
 		null,
 		{ uri: vscode.Uri.file(__dirname) }
 	);
-	const uri: vscode.Uri = vscode.Uri.file(path.join(__dirname, 'helloWorld.m'));
+	const uri: vscode.Uri = vscode.Uri.file(path.join(__dirname, "helloWorld.m"));
 	vscode.workspace.openTextDocument(uri).then(cb);
 }

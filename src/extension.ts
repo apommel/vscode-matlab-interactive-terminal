@@ -25,12 +25,12 @@ let scriptDir = path.join(extDir, "/interfaces/standard");
 let terminalPath = path.join(scriptDir, pythonScripts.terminal);
 
 // Get configuration parameters
-const getConfigMap = () => {
+function getConfigMap() {
 	return vscode.workspace.getConfiguration("matlab-interactive-terminal");
-};
+}
 
 // Get Python interpreter path
-const getPythonPath = () => {
+function getPythonPath() {
 	let extConfig = getConfigMap();
 	let pythonPathSetting: string | undefined;
 	pythonPathSetting = extConfig.get("pythonPath");
@@ -38,7 +38,7 @@ const getPythonPath = () => {
 	return pythonPathSetting
 		? path.normalize(pythonPathSetting)
 		: "python";
-};
+}
 let pythonPath: string | undefined = getPythonPath();
 
 // Set up common terminal options
@@ -47,7 +47,7 @@ export let terminalLaunchOptions: vscode.TerminalOptions = {
 	shellPath: pythonPath
 };
 
-const getUnicodeOption = () => {
+function getUnicodeOption() {
 	let extConfig = getConfigMap();
 	let unicodeOption: boolean | undefined;
 	unicodeOption = extConfig.get("unicodeSwitch");
@@ -67,7 +67,7 @@ getUnicodeOption();
 let errMessage = "";
 let correctSetup: boolean;
 
-const checkSetup = () => {
+function checkSetup() {
 	let scriptPath = path.join(scriptDir, pythonScripts.dependencies);
 	const { execFileSync } = require("child_process");
 	if (!pythonPath) {
@@ -81,13 +81,13 @@ const checkSetup = () => {
 		}
 	}
 	catch (error) { // If an error is caught, it means Python cannot be called
-		errMessage = error.message;
+		errMessage = (error as Error).message;
 		return false;
 	}
 	return true;
-};
+}
 
-export const openMatlabTerminal = () => {
+export function openMatlabTerminal() {
 	getUnicodeOption();
 	pythonPath = getPythonPath();
 	correctSetup = checkSetup();
@@ -103,16 +103,16 @@ export const openMatlabTerminal = () => {
 		console.log(errMessage);
 		vscode.window.showErrorMessage(errMessage);
 	}
-};
+}
 
-const terminalFallback = (activeTerminal: vscode.Terminal | undefined) => {
+function terminalFallback(activeTerminal: vscode.Terminal | undefined) {
 	// The terminal is not opened if there is already a current one
 	if (activeTerminal === undefined || (activeTerminal && activeTerminal.name !== "MATLAB")) {
 		openMatlabTerminal();
 	}
-};
+}
 
-export const runMatlabScript = () => {
+export function runMatlabScript() {
 	let activeTextEditor = vscode.window.activeTextEditor;
 	let activeTerminal = vscode.window.activeTerminal;
 	if (activeTextEditor) {
@@ -146,9 +146,9 @@ export const runMatlabScript = () => {
 	else { // If not any file is opened, a Matlab terminal is simply opened
 		terminalFallback(activeTerminal);
 	}
-};
+}
 
-export const runMatlabSelection = () => {
+export function runMatlabSelection() {
 	let activeTextEditor = vscode.window.activeTextEditor;
 	let activeTerminal = vscode.window.activeTerminal;
 	if (activeTextEditor) {
@@ -204,11 +204,11 @@ export const runMatlabSelection = () => {
 	else {
 		terminalFallback(activeTerminal);
 	}
-};
+}
 
-export const resetPythonPath = () => {
+export function resetPythonPath() {
 	pythonPath = getPythonPath();
-};
+}
 
 export const matlabTerminalProfile: vscode.TerminalProfileProvider = {
 	provideTerminalProfile() {

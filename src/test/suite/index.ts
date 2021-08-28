@@ -1,28 +1,30 @@
-import * as path from 'path';
-import * as Mocha from 'mocha';
-import * as glob from 'glob';
+import * as path from "path";
+import * as Mocha from "mocha";
+import * as glob from "glob";
+import * as vscode from "vscode";
 
 export function run(): Promise<void> {
 	// Create the mocha test
 	const mocha = new Mocha({
-		ui: 'tdd',
+		ui: "tdd",
+		color: true
 	});
-	mocha.useColors(true);
 
-	const testsRoot = path.resolve(__dirname, '..');
+	const testsRoot = path.resolve(__dirname, "..");
 
-	return new Promise((c, e) => {
-		glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
+	return new Promise(function(c, e) {
+		glob("**/**.test.js", { cwd: testsRoot }, function(err, files) {
 			if (err) {
 				return e(err);
 			}
 
 			// Add files to the test suite
-			files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
+			files.forEach(function(f: string) { mocha.addFile(path.resolve(testsRoot, f)); });
 
 			try {
 				// Run the mocha test
-				mocha.run(failures => {
+				vscode.window.showInformationMessage("Start all tests.");
+				mocha.run(function(failures) {
 					if (failures > 0) {
 						e(new Error(`${failures} tests failed.`));
 					} else {
@@ -30,6 +32,7 @@ export function run(): Promise<void> {
 					}
 				});
 			} catch (err) {
+				console.error(err);
 				e(err);
 			}
 		});
