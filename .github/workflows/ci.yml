@@ -2,9 +2,9 @@ name: Extension CI
 
 on:
   push:
-    branches: [ main, release-candidate/* ]
+    branches: [ '**' ]
   pull_request:
-    branches: [ main, release-candidate/* ]
+    branches: [ '**' ]
 
 jobs:
   build:
