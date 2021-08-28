@@ -1,0 +1,29 @@
+name: Extension CI
+
+on:
+  push:
+    branches: [ main, release-candidate/* ]
+  pull_request:
+    branches: [ main, release-candidate/* ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install MATLAB
+      uses: matlab-actions/setup-matlab@v0
+    - name: Compile and Run Unit Tests
+    - run: npm install
+    - run: xvfb-run -a npm test
+      if: runner.os == 'Linux'
+    - run: npm test
+      if: runner.os != 'Linux'
