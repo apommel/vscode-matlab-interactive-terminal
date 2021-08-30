@@ -10,7 +10,8 @@ async function main() {
 			extensionTestsPath,
 			launchArgs: [
 				"--disable-extensions",
-				"--disable-workspace-trust"
+				"--disable-workspace-trust",
+				"--enable-proposed-api"
 			]
 		});
 	} catch (err) {
