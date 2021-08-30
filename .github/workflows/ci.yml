@@ -10,16 +10,14 @@ jobs:
   build:
     strategy:
       matrix:
-        os: ubuntu-latest
-        python-version: '3.x'
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.9
     - name: Install MATLAB
       uses: matlab-actions/setup-matlab@v0
       with:
