@@ -21,8 +21,8 @@ jobs:
         node-version: '12'
     - name: Install MATLAB
       uses: matlab-actions/setup-matlab@v0
-    - name: Compile and Run Unit Tests
-    - run: npm install
+    - name: Compile
+      run: npm install
     - run: xvfb-run -a npm test
       if: runner.os == 'Linux'
     - run: npm test
