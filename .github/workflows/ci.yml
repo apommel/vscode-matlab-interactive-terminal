@@ -23,7 +23,7 @@ jobs:
     - name: Install MATLAB Engine for Python
       run: |
         cd /usr/local/MATLAB/R2021a/extern/engines/python
-        python setup.py install --user
+        python setup.py build --build-base=$(mktemp -d) install --user
         cd -
     - name: Install Node.js
       uses: actions/setup-node@v1
