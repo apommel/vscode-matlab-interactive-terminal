@@ -10,17 +10,29 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: ubuntu-latest
+        python-version: '3.x'
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install MATLAB
+      uses: matlab-actions/setup-matlab@v0
+      with:
+        release: R2021a
+    - name: Install MATLAB Engine for Python
+      run: |
+        cd /usr/local/MATLAB/R2021a/extern/engines/python
+        python setup.py install
+        cd -
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '12'
-    - name: Install MATLAB
-      uses: matlab-actions/setup-matlab@v0
     - name: Compile
       run: npm install
     - run: xvfb-run -a npm test
