@@ -15,7 +15,7 @@ suite("MATLAB Interactive Terminal extension test suite", function () {
 				matlabInteractiveTerminal.terminalLaunchOptions.name
 			);
 			done();
-		})
+		});
 	});
 
 	test("runMatlabScript test", function (done) {
@@ -26,7 +26,7 @@ suite("MATLAB Interactive Terminal extension test suite", function () {
 		});
 	});
 
-	test("runMatlabSelection test", function () {
+	test("runMatlabSelection test", function (done) {
 		this.timeout(10000);
 		openHelloWorld(document => {
 			const docLength = document.getText().length;
