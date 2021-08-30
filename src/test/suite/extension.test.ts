@@ -3,47 +3,60 @@ import * as path from "path";
 import * as vscode from "vscode";
 import * as matlabInteractiveTerminal from "../../extension";
 
-suite("MATLAB Interactive Terminal extension test suite", function () {
+suite("MATLAB Interactive Terminal extension test suite", function() {
 	vscode.window.showInformationMessage("Start all tests.");
 
-	test("openMatlabTerminal test", function (done) {
+	test("openMatlabTerminal test", function(done) {
 		this.timeout(10000);
-		matlabInteractiveTerminal.openMatlabTerminal();
-		vscode.window.onDidChangeActiveTerminal(function () {
+		vscode.window.onDidChangeActiveTerminal(function() {
 			assert.strictEqual(
 				vscode.window.activeTerminal?.name,
 				matlabInteractiveTerminal.terminalLaunchOptions.name
 			);
 			done();
 		});
+		matlabInteractiveTerminal.openMatlabTerminal();
 	});
 
-	test("runMatlabScript test", function (done) {
+	test("runMatlabScript test", function(done) {
 		this.timeout(10000);
-		openHelloWorld(function () {
+		openHelloWorld(function() {
+			const subscription = vscode.window.onDidWriteTerminalData(function(e) {
+				assert.strictEqual(e.data, 'Hello, World');
+				subscription.dispose();
+				done();
+			});
 			matlabInteractiveTerminal.runMatlabScript();
-			done();
 		});
 	});
 
-	test("runMatlabSelection test", function (done) {
+	test("runMatlabSelection test", function(done) {
 		this.timeout(10000);
-		openHelloWorld(document => {
+		openHelloWorld(function(document) {
 			const docLength = document.getText().length;
 			vscode.window.showTextDocument(document, {
 				selection: new vscode.Range(
 					new vscode.Position(1, 1),
 					new vscode.Position(1, docLength + 1)
 				)
-			}).then(editor => {
+			}).then(function() {
+				const subscription = vscode.window.onDidWriteTerminalData(function(e) {
+					assert.strictEqual(e.data, 'Hello, World');
+					subscription.dispose();
+					done();
+				});
 				matlabInteractiveTerminal.runMatlabSelection();
-				done();
 			});
 		});
 	});
 });
 
 function openHelloWorld(cb: (document: vscode.TextDocument) => void) {
+	if (vscode.window.activeTerminal?.name !== matlabInteractiveTerminal.terminalLaunchOptions.name) {
+		vscode.window.onDidChangeActiveTerminal(openHelloWorld.bind(vscode.window, cb));
+		matlabInteractiveTerminal.openMatlabTerminal();
+		return;
+	}
 	vscode.workspace.updateWorkspaceFolders(
 		vscode.workspace.workspaceFolders
 			? vscode.workspace.workspaceFolders.length
