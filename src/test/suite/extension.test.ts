@@ -7,7 +7,7 @@ suite("MATLAB Interactive Terminal extension test suite", function () {
 	vscode.window.showInformationMessage("Start all tests.");
 
 	test("openMatlabTerminal test", function (done) {
-		this.timeout(5000);
+		this.timeout(10000);
 		matlabInteractiveTerminal.openMatlabTerminal();
 		vscode.window.onDidChangeActiveTerminal(function () {
 			assert.strictEqual(
@@ -19,12 +19,14 @@ suite("MATLAB Interactive Terminal extension test suite", function () {
 	});
 
 	test("runMatlabScript test", function () {
+		this.timeout(10000);
 		openHelloWorld(function () {
 			matlabInteractiveTerminal.runMatlabScript();
 		});
 	});
 
 	test("runMatlabSelection test", function () {
+		this.timeout(10000);
 		openHelloWorld(document => {
 			const docLength = document.getText().length;
 			vscode.window.showTextDocument(document, {
