@@ -90,6 +90,7 @@
 		"glob": "^7.1.5",
 		"mocha": "^9.0.3",
 		"rimraf": "^3.0.2",
+		"tsc-hooks": "^1.1.0",
 		"typescript": "^4.3.5",
 		"vscode-test": "^1.4.0"
 	}
