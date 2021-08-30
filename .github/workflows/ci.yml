@@ -8,8 +8,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
