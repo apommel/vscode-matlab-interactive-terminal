@@ -18,10 +18,11 @@ suite("MATLAB Interactive Terminal extension test suite", function () {
 		})
 	});
 
-	test("runMatlabScript test", function () {
+	test("runMatlabScript test", function (done) {
 		this.timeout(10000);
 		openHelloWorld(function () {
 			matlabInteractiveTerminal.runMatlabScript();
+			done();
 		});
 	});
 
@@ -36,6 +37,7 @@ suite("MATLAB Interactive Terminal extension test suite", function () {
 				)
 			}).then(editor => {
 				matlabInteractiveTerminal.runMatlabSelection();
+				done();
 			});
 		});
 	});
