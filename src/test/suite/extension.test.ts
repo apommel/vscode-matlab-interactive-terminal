@@ -30,12 +30,11 @@ suite("MATLAB Interactive Terminal extension test suite", function() {
 		this.timeout(10000);
 		openHelloWorld(function(document) {
 			const docLength = document.getText().length;
-			vscode.window.showTextDocument(document, {
-				selection: new vscode.Range(
-					new vscode.Position(1, 1),
-					new vscode.Position(1, docLength + 1)
-				)
-			}).then(function() {
+			vscode.window.showTextDocument(document).then(function(textEditor: vscode.TextEditor) {
+				textEditor.selection = new vscode.Selection(
+					new vscode.Position(0, 0),
+					new vscode.Position(0, docLength)
+				);
 				matlabInteractiveTerminal.runMatlabSelection();
 				done();
 			});
