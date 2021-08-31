@@ -10,6 +10,7 @@ async function main() {
 			extensionTestsPath,
 			launchArgs: [
 				"--disable-extensions",
+				"--disable-gpu",
 				"--disable-workspace-trust",
 				"--no-xshm"
 			]

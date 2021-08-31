@@ -43,11 +43,6 @@ suite("MATLAB Interactive Terminal extension test suite", function() {
 });
 
 function openHelloWorld(cb: (document: vscode.TextDocument) => void) {
-	if (vscode.window.activeTerminal?.name !== matlabInteractiveTerminal.terminalLaunchOptions.name) {
-		vscode.window.onDidChangeActiveTerminal(openHelloWorld.bind(vscode.window, cb));
-		matlabInteractiveTerminal.openMatlabTerminal();
-		return;
-	}
 	vscode.workspace.updateWorkspaceFolders(
 		vscode.workspace.workspaceFolders
 			? vscode.workspace.workspaceFolders.length
