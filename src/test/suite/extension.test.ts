@@ -8,14 +8,22 @@ suite("MATLAB Interactive Terminal extension test suite", function() {
 
 	test("openMatlabTerminal test", function(done) {
 		this.timeout(10000);
-		vscode.window.onDidChangeActiveTerminal(function() {
+		try {
+			vscode.window.onDidChangeActiveTerminal(function() {
+				assert.strictEqual(
+					vscode.window.activeTerminal?.name,
+					matlabInteractiveTerminal.terminalLaunchOptions.name
+				);
+				done();
+			});
+			matlabInteractiveTerminal.openMatlabTerminal();	
+		} catch(e) {
 			assert.strictEqual(
 				vscode.window.activeTerminal?.name,
 				matlabInteractiveTerminal.terminalLaunchOptions.name
 			);
-			done();
-		});
-		matlabInteractiveTerminal.openMatlabTerminal();
+		    console.error(e);
+		}
 	});
 
 	test("runMatlabScript test", function(done) {

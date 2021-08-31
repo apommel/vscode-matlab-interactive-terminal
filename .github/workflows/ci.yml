@@ -31,7 +31,7 @@ jobs:
         node-version: 14.x
     - name: Compile
       run: npm install
-    - name: Run Display Server
+    - name: Run Tests
       uses: GabrielBB/xvfb-action@v1.4
       with:
         run: npm test
