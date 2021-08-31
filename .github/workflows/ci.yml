@@ -28,7 +28,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '12'
+        node-version: 14.x
     - name: Compile
       run: npm install
     - name: Run Tests
