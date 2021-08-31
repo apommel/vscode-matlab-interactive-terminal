@@ -17,8 +17,5 @@
 	"exclude": [
 		"node_modules",
 		".vscode-test"
-	],
-	"hooks": [
-		"copy-files"
 	]
 }
