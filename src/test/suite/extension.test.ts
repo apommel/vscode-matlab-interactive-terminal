@@ -61,7 +61,7 @@ function attachTerminalTest() {
 	const subscription = vscode.window.onDidWriteTerminalData(function(e) {
 		console.log(e);
 		if ((entry = !entry)) {
-			assert.strictEqual(e.data.trim(), 'Hello, World');
+			assert.strictEqual(e.data.trim(), 'Hello, World!');
 			subscription.dispose();
 		}
 	});
