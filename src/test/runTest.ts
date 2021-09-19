@@ -12,7 +12,9 @@ async function main() {
 				"--disable-extensions",
 				"--disable-gpu",
 				"--disable-workspace-trust",
-				"--no-xshm"
+				"--enable-proposed-api=apommel.matlab-interactive-terminal",
+				"--no-xshm",
+				extensionDevelopmentPath
 			]
 		});
 	} catch (err) {

@@ -13,6 +13,7 @@
 	"engines": {
 		"vscode": "^1.59.0"
 	},
+	"enableProposedApi": true,
 	"categories": [
 		"Programming Languages",
 		"Other"
@@ -75,10 +76,10 @@
 		"vscode:prepublish": "npm-run-all clean compile cpx",
 		"clean": "rimraf out *.vsix",
 		"compile": "tsc -p ./",
-		"cpx": "npx cpx src/**/*.m out",
+		"copy": "npx cpx src/**/*.m out",
 		"package": "npx vsce package",
-		"postinstall": "npm run cpx",
-		"pretest": "npm-run-all clean compile cpx",
+		"postinstall": "npm run copy && npx vscode-dts dev",
+		"pretest": "npm-run-all clean compile copy",
 		"test": "node ./out/test/runTest.js",
 		"watch": "tsc -watch -p ./"
 	},
@@ -90,6 +91,7 @@
 		"@typescript-eslint/eslint-plugin": "^4.28.0",
 		"@typescript-eslint/parser": "^4.28.0",
 		"cpx": "^1.5.0",
+		"delay": "^5.0.0",
 		"eslint": "^7.30.0",
 		"glob": "^7.1.5",
 		"mocha": "^9.0.3",
@@ -97,6 +99,7 @@
 		"rimraf": "^3.0.2",
 		"typescript": "^4.3.5",
 		"vsce": "^1.96.2",
+		"vscode-dts": "^0.3.1",
 		"vscode-test": "^1.6.1"
 	}
 }
