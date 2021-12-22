@@ -18,7 +18,11 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onStartupFinished"
+		"onLanguage:matlab",
+		"onCommand:matlab-interactive-terminal.openMatlabTerminal",
+		"onCommand:matlab-interactive-terminal.runMatlabScript",
+		"onCommand:matlab-interactive-terminal.runMatlabSelection",
+		"onTerminalProfile:matlab-interactive-terminal.terminal-profile"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
