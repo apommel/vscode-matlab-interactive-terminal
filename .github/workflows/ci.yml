@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: 3.8
     - name: Install MATLAB
-      uses: matlab-actions/setup-matlab@v0
+      uses: matlab-actions/setup-matlab@v1.1.0
       with:
         release: R2021a
     - name: Install MATLAB Engine for Python
