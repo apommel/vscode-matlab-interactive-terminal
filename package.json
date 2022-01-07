@@ -11,9 +11,11 @@
 		"url": "https://github.com/apommel/vscode-matlab-interactive-terminal.git"
 	},
 	"engines": {
-		"vscode": "^1.59.0"
+		"vscode": "^1.63.0"
 	},
-	"enableProposedApi": true,
+	"enabledApiProposals": [
+		"terminalDataWriteEvent"
+	],
 	"categories": [
 		"Programming Languages",
 		"Other"
@@ -79,6 +81,7 @@
 		"copy": "npx cpx src/**/*.m out",
 		"package": "npx vsce package",
 		"postinstall": "npm run copy && npx vscode-dts dev",
+		"postdownload-api": "vscode-dts main",
 		"pretest": "npm-run-all clean compile copy",
 		"test": "node ./out/test/runTest.js",
 		"watch": "tsc -watch -p ./"
@@ -87,7 +90,7 @@
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^9.0.0",
 		"@types/node": "^12.12.67",
-		"@types/vscode": "^1.59.0",
+		"@types/vscode": "^1.63.0",
 		"@typescript-eslint/eslint-plugin": "^4.28.0",
 		"@typescript-eslint/parser": "^4.28.0",
 		"cpx": "^1.5.0",
@@ -99,7 +102,7 @@
 		"rimraf": "^3.0.2",
 		"typescript": "^4.3.5",
 		"vsce": "^1.96.2",
-		"vscode-dts": "^0.3.1",
+		"vscode-dts": "^0.3.3",
 		"vscode-test": "^1.6.1"
 	}
 }

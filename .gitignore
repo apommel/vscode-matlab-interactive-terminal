@@ -7,3 +7,4 @@ __pycache__/
 *.pyc
 *.vsix
 vscode.proposed.d.ts
+vscode.proposed.*.d.ts

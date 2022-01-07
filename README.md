@@ -1,6 +1,6 @@
-# Matlab Interactive Terminal for Visual Studio Code
+# MATLAB Interactive Terminal for Visual Studio Code
 
-Matlab Interactive Terminal is an extension for Visual Studio Code that allows users to launch MATLAB scripts and have a working MATLAB REPL directly included in Visual Studio Code. This extension uses the MATLAB Engine for Python which must be correctly set up for the extension to work. It works equally on Windows, macOS and Linux.
+MATLAB Interactive Terminal is an extension for Visual Studio Code that allows users to launch MATLAB scripts and have a working MATLAB REPL directly included in Visual Studio Code. This extension uses the MATLAB Engine for Python which must be correctly set up for the extension to work. It works equally on Windows, macOS and Linux.
 
 ## Requirements
 
@@ -19,8 +19,8 @@ The extension adds three commands to Visual Studio Code, that can then be tied t
 
 ## Recommended VS Code Extensions
 
-- [Matlab](https://marketplace.visualstudio.com/items?itemName=Gimly81.matlab) (from Xavier Hahn) provides syntax coloration, snippets and linting for the Matlab language. Matlab Interactive Terminal is thought for working with it.
-- [Matlab Code Run](https://marketplace.visualstudio.com/items?itemName=bramvanbilsen.matlab-code-run) (from Bram Vanbilsen) is a good alternative to Matlab Interactive Terminal without the Python and Matlab Engine API dependencies. It should provide similar functionalities on both Mac OS and Linux.
+- [Matlab](https://marketplace.visualstudio.com/items?itemName=Gimly81.matlab) (from Xavier Hahn) provides syntax coloration, snippets and linting for the MATLAB language. MATLAB Interactive Terminal is thought for working with it.
+- [Matlab Code Run](https://marketplace.visualstudio.com/items?itemName=bramvanbilsen.matlab-code-run) (from Bram Vanbilsen) is a good alternative to MATLAB Interactive Terminal without the Python and MATLAB Engine API dependencies. It should provide similar functionalities on both Mac OS and Linux.
 
 ## Known Issues
 

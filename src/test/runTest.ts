@@ -3,9 +3,11 @@ import { runTests } from "vscode-test";
 
 async function main() {
 	try {
+		const version = "insiders";
 		const extensionDevelopmentPath = path.resolve(__dirname, "../../");
 		const extensionTestsPath = path.resolve(__dirname, "./suite/index");
 		await runTests({
+			version,
 			extensionDevelopmentPath,
 			extensionTestsPath,
 			launchArgs: [
