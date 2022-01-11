@@ -45,7 +45,7 @@ class MatlabInterface:
                 
                 For product information, visit https://www.mathworks.com.\
                 '''.format(release=self.release())
-                print(dedent(intro))
+                print(dedent(intro).strip())
 
             except Exception as e:
                 self.clear()
@@ -67,7 +67,7 @@ class MatlabInterface:
         if not import_fail:
 
             try:
-                print("File: \"{}\"".format(script_path))
+                print(">>> run(\"{}\")".format(script_path))
                 stream = StringIO()
                 err_stream = StringIO()
                 self.eng.run(script_path, nargout=0, stdout=stream, stderr=err_stream)

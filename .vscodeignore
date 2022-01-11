@@ -2,8 +2,11 @@
 .vscode-test/**
 out/test/**
 src/**
+temp/**
 .gitignore
 vsc-extension-quickstart.md
+vscode.proposed.d.ts
+vscode.proposed.*.d.ts
 **/tsconfig.json
 **/tslint.json
 **/*.map

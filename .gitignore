@@ -1,7 +1,10 @@
-out
-node_modules
+out/
+node_modules/
+temp/
 .vscode-test/
-*.vsix
 __pycache__/
 */__pycache__/
 *.pyc
+*.vsix
+vscode.proposed.d.ts
+vscode.proposed.*.d.ts

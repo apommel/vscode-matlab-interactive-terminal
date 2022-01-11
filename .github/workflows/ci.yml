@@ -1,0 +1,37 @@
+name: Extension CI
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install MATLAB
+      uses: matlab-actions/setup-matlab@v1.1.0
+      with:
+        release: R2021a
+    - name: Install MATLAB Engine for Python
+      run: |
+        cd /usr/local/MATLAB/R2021a/extern/engines/python
+        python setup.py build --build-base=$(mktemp -d) install --user
+        cd -
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Compile
+      run: npm install
+    - name: Run Tests
+      uses: GabrielBB/xvfb-action@v1.4
+      with:
+        run: npm test
