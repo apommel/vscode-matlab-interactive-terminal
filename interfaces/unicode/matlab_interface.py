@@ -46,13 +46,14 @@ class MatlabInterface:
                 '''.format(release=self.release())
                 print(dedent(intro))
 
-            except Exception as e:
+            except MatlabTerminated as e:
                 self.clear()
-                print("MATLAB Engine for Python exited prematurely.")
-                print(e)
+                print("Launching MATLAB failed: Error starting MATLAB process in MATLAB Engine for Python.")
+                print(str(e))
 
         else:
-            print("Launching MATLAB failed: Error starting MATLAB process in MATLAB Engine for Python.")
+            print("MATLAB Engine for Python cannot be detected. Please install it for the extension to work.")
+
 
     def clear(self):
         os.system(self.cls_str)
